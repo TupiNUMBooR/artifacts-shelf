@@ -20,7 +20,9 @@
       line-height: 1.55;
     }
 
-    a { color: var(--link); }
+    a {
+      color: var(--link);
+    }
 
     main {
       max-width: 960px;
@@ -33,12 +35,35 @@
       border-radius: 12px;
     }
 
-    /* fallback: если JS не сработал */
+    .language-bar {
+      display: none;
+      justify-content: flex-end;
+      margin-bottom: 18px;
+    }
+
+    .language-select {
+      background: var(--panel);
+      color: var(--text);
+      border: 1px solid var(--link);
+      border-radius: 10px;
+      padding: 8px 12px;
+      font: inherit;
+      outline: none;
+    }
+
+    .language-select:focus {
+      box-shadow: 0 0 0 2px #9f04;
+    }
+
     .content {
       background: var(--panel);
       border-radius: 18px;
       padding: 24px;
       box-shadow: 0 0 20px #0008;
+    }
+
+    .content.hidden {
+      display: none;
     }
 
     h1 {
@@ -51,7 +76,6 @@
       margin-top: 0;
     }
 
-    /* enhanced: если JS сработал */
     .content.enhanced {
       background: transparent;
       border-radius: 0;
@@ -75,43 +99,111 @@
 
 <body>
   <main>
-    <div id="content" class="content">
-      {{ content }}
+    <div id="language-bar" class="language-bar">
+      <select id="language-select" class="language-select" aria-label="Language">
+        <option value="en">English</option>
+        <option value="ru">Русский</option>
+      </select>
     </div>
+
+    {{ content }}
   </main>
 
   <script>
     (() => {
-      const content = document.getElementById('content');
-      const nodes = Array.from(content.childNodes);
+      const contents = {
+        en: document.getElementById('content-en'),
+        ru: document.getElementById('content-ru')
+      };
 
-      let panel = null;
-      const panels = [];
+      const languageBar = document.getElementById('language-bar');
+      const languageSelect = document.getElementById('language-select');
 
-      for (const node of nodes) {
-        const isHeading =
-          node.nodeType === Node.ELEMENT_NODE &&
-          node.tagName === 'H1';
+      const availableLanguages = Object
+        .entries(contents)
+        .filter(([, element]) => element);
 
-        if (isHeading) {
-          panel = document.createElement('section');
-          panel.className = 'panel';
-          panels.push(panel);
+      if (availableLanguages.length === 0) {
+        return;
+      }
+
+      function enhanceContent(content) {
+        if (!content || content.dataset.enhanced === 'true') {
+          return;
         }
 
-        if (panel) {
-          panel.appendChild(node);
+        const nodes = Array.from(content.childNodes);
+        let panel = null;
+        const panels = [];
+
+        for (const node of nodes) {
+          const isHeading =
+            node.nodeType === Node.ELEMENT_NODE &&
+            node.tagName === 'H1';
+
+          if (isHeading) {
+            panel = document.createElement('section');
+            panel.className = 'panel';
+            panels.push(panel);
+          }
+
+          if (panel) {
+            panel.appendChild(node);
+          }
+        }
+
+        if (panels.length === 0) {
+          return;
+        }
+
+        content.textContent = '';
+        content.classList.add('enhanced');
+        content.dataset.enhanced = 'true';
+
+        for (const item of panels) {
+          content.appendChild(item);
         }
       }
 
-      if (panels.length === 0) return;
-
-      content.textContent = '';
-      content.classList.add('enhanced');
-
-      for (const item of panels) {
-        content.appendChild(item);
+      function normalizeLanguage(language) {
+        return language && language.toLowerCase().startsWith('ru')
+          ? 'ru'
+          : 'en';
       }
+
+      function getInitialLanguage() {
+        const saved = localStorage.getItem('artifact-shelf-language');
+
+        if (saved === 'en' || saved === 'ru') {
+          return saved;
+        }
+
+        return normalizeLanguage(navigator.language);
+      }
+
+      function showLanguage(language) {
+        const selectedLanguage = contents[language] ? language : 'en';
+
+        for (const [key, content] of Object.entries(contents)) {
+          if (!content) {
+            continue;
+          }
+
+          content.classList.toggle('hidden', key !== selectedLanguage);
+        }
+
+        enhanceContent(contents[selectedLanguage]);
+
+        languageSelect.value = selectedLanguage;
+        localStorage.setItem('artifact-shelf-language', selectedLanguage);
+      }
+
+      languageBar.style.display = 'flex';
+      showLanguage(getInitialLanguage());
+
+      languageSelect.addEventListener('change', () => {
+        showLanguage(languageSelect.value);
+      });
     })();
   </script>
 </body>
