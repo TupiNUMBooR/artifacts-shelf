@@ -4,7 +4,7 @@
 
 I make tools, bots, games, videos, pipelines, and whatever else I feel like building — and I ship them.
 
-[GitHub](https://github.com/TupiNUMBooR) | [itch.io](https://tupinumboor.itch.io) | [YouTube](https://www.youtube.com/@SpaceDreamer1111)
+[GitHub](https://github.com/TupiNUMBooR) \| [itch.io](https://tupinumboor.itch.io) \| [YouTube](https://www.youtube.com/@SpaceDreamer1111)
 
 
 
@@ -23,7 +23,7 @@ VYRA is a minimalist desktop diary overlay for fast screenshots, notes, and opti
 ![WPF](https://img.shields.io/badge/UI-WPF-blue)
 ![itch.io](https://img.shields.io/badge/deploy-itch.io-blue?logo=itchdotio)
 
-[itch.io](https://tupinumboor.itch.io/vyra) | [GitHub](https://github.com/TupiNUMBooR/VYRA)
+[itch.io](https://tupinumboor.itch.io/vyra) \| [GitHub](https://github.com/TupiNUMBooR/VYRA)
 
 Fully automated development pipeline: build → package → publish to itch.io
 
@@ -45,7 +45,7 @@ A Telegram bot that downloads YouTube videos using `yt-dlp`, exposes them via a 
 ![Docker](https://img.shields.io/badge/docker-ghcr-blue?logo=docker)
 ![Deploy](https://img.shields.io/badge/deploy-ssh-blue)
 
-[@ytdlp_202604_bot](https://t.me/ytdlp_202604_bot) | [GitHub](https://github.com/TupiNUMBooR/yt-dlp-tg-bot)
+[@ytdlp_202604_bot](https://t.me/ytdlp_202604_bot) \| [GitHub](https://github.com/TupiNUMBooR/yt-dlp-tg-bot)
 
 Automated CI/CD pipeline: builds multiple Docker images and deploys them to a configured SSH server
 
@@ -68,7 +68,7 @@ Klip is a small desktop pet for Windows that follows your cursor and remembers y
 ![WinForms](https://img.shields.io/badge/UI-WinForms-blue)
 ![itch.io](https://img.shields.io/badge/deploy-itch.io-blue?logo=itchdotio)
 
-[itch.io](https://tupinumboor.itch.io/klip) | [GitHub](https://github.com/TupiNUMBooR/pet)
+[itch.io](https://tupinumboor.itch.io/klip) \| [GitHub](https://github.com/TupiNUMBooR/pet)
 
 Fully automated development pipeline: build → package → publish to itch.io
 

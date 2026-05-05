@@ -4,7 +4,7 @@
 
 Я делаю инструменты, ботов, игры, видео, пайплайны и всё остальное, что мне в моменте хочется собрать — и я это выпускаю.
 
-[GitHub](https://github.com/TupiNUMBooR) | [itch.io](https://tupinumboor.itch.io) | [YouTube](https://www.youtube.com/@SpaceDreamer1111)
+[GitHub](https://github.com/TupiNUMBooR) \| [itch.io](https://tupinumboor.itch.io) \| [YouTube](https://www.youtube.com/@SpaceDreamer1111)
 
 
 
@@ -23,7 +23,7 @@ VYRA — это минималистичный оверлей-дневник д�
 ![WPF](https://img.shields.io/badge/UI-WPF-blue)
 ![itch.io](https://img.shields.io/badge/deploy-itch.io-blue?logo=itchdotio)
 
-[itch.io](https://tupinumboor.itch.io/vyra) | [GitHub](https://github.com/TupiNUMBooR/VYRA)
+[itch.io](https://tupinumboor.itch.io/vyra) \| [GitHub](https://github.com/TupiNUMBooR/VYRA)
 
 Полностью автоматизированный пайплайн разработки: build → package → publish в itch.io
 
@@ -45,7 +45,7 @@ Telegram-бот, который скачивает YouTube-видео через
 ![Docker](https://img.shields.io/badge/docker-ghcr-blue?logo=docker)
 ![Deploy](https://img.shields.io/badge/deploy-ssh-blue)
 
-[@ytdlp_202604_bot](https://t.me/ytdlp_202604_bot) | [GitHub](https://github.com/TupiNUMBooR/yt-dlp-tg-bot)
+[@ytdlp_202604_bot](https://t.me/ytdlp_202604_bot) \| [GitHub](https://github.com/TupiNUMBooR/yt-dlp-tg-bot)
 
 Автоматизированный CI/CD пайплайн: собирает несколько Docker-образов и деплоит их на настроенный SSH-сервер
 
@@ -68,7 +68,7 @@ Klip — это маленький десктопный питомец для Wi
 ![WinForms](https://img.shields.io/badge/UI-WinForms-blue)
 ![itch.io](https://img.shields.io/badge/deploy-itch.io-blue?logo=itchdotio)
 
-[itch.io](https://tupinumboor.itch.io/klip) | [GitHub](https://github.com/TupiNUMBooR/pet)
+[itch.io](https://tupinumboor.itch.io/klip) \| [GitHub](https://github.com/TupiNUMBooR/pet)
 
 Полностью автоматизированный пайплайн разработки: build → package → publish в itch.io
 
