@@ -78,7 +78,7 @@ Fully automated development pipeline: build → package → publish to itch.io
 
 # Space Dreamer
 
-<img src="assets/Space_Dreamer.jpg">
+![](assets/Space_Dreamer.jpg)
 
 Experimental YouTube channel with music, visuals, and edits
 
@@ -102,6 +102,8 @@ Best videos:
 
 # Quiet Wow
 
+![](assets/Quiet_Wow.jpg)
+
 My YouTube channel about interesting facts
 
 [YouTube](https://www.youtube.com/@QuietWow999)
@@ -117,17 +119,15 @@ Estimated cost: about $0.50 per video.
 
 Status: shut down, thinking about new content
 
-![](assets/Quiet_Wow.jpg)
-
 
 
 # Space Carrot
 
+<img src="assets/Space_Carrot_Steam_header.jpg" width="300">
+
 My game on Steam — a completed and shipped commercial project
 
 [Space Carrot on Steam](https://store.steampowered.com/app/1174490/Space_Carrot/)
-
-<img src="assets/Space_Carrot_Steam_header.jpg" width="300">
 
 ![](assets/Space_Carrot.jpg)
 
@@ -135,8 +135,8 @@ My game on Steam — a completed and shipped commercial project
 
 # Unity Work
 
-A collection of gameplay and prototype work in Unity
-
 ![](assets/Examples.gif)
+
+A collection of gameplay and prototype work in Unity
 
 [Examples of my work as Unity Developer - YouTube](https://www.youtube.com/watch?v=jdV6eylSV1o)
