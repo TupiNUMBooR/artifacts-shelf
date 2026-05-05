@@ -17,6 +17,7 @@
       background: var(--bg);
       color: var(--text);
       font-family: system-ui, sans-serif;
+      line-height: 1.55;
     }
 
     a { color: var(--link); }
@@ -24,7 +25,7 @@
     main {
       max-width: 960px;
       margin: 0 auto;
-      padding: 32px 18px;
+      padding: 36px 18px;
     }
 
     img {
@@ -32,24 +33,86 @@
       border-radius: 12px;
     }
 
+    /* fallback: если JS не сработал */
+    .content {
+      background: var(--panel);
+      border-radius: 18px;
+      padding: 24px;
+      box-shadow: 0 0 20px #0008;
+    }
+
     h1 {
       border-bottom: 2px solid var(--link);
       padding-bottom: 8px;
+      margin-top: 48px;
+    }
+
+    h1:first-child {
+      margin-top: 0;
+    }
+
+    /* enhanced: если JS сработал */
+    .content.enhanced {
+      background: transparent;
+      border-radius: 0;
+      padding: 0;
+      box-shadow: none;
     }
 
     .panel {
       background: var(--panel);
       border-radius: 18px;
       padding: 24px;
+      margin-bottom: 32px;
       box-shadow: 0 0 20px #0008;
+    }
+
+    .panel h1 {
+      margin-top: 0;
     }
   </style>
 </head>
+
 <body>
   <main>
-    <div class="panel">
+    <div id="content" class="content">
       {{ content }}
     </div>
   </main>
+
+  <script>
+    (() => {
+      const content = document.getElementById('content');
+      const nodes = Array.from(content.childNodes);
+
+      let panel = null;
+      const panels = [];
+
+      for (const node of nodes) {
+        const isHeading =
+          node.nodeType === Node.ELEMENT_NODE &&
+          node.tagName === 'H1';
+
+        if (isHeading) {
+          panel = document.createElement('section');
+          panel.className = 'panel';
+          panels.push(panel);
+        }
+
+        if (panel) {
+          panel.appendChild(node);
+        }
+      }
+
+      if (panels.length === 0) return;
+
+      content.textContent = '';
+      content.classList.add('enhanced');
+
+      for (const item of panels) {
+        content.appendChild(item);
+      }
+    })();
+  </script>
 </body>
 </html>
