@@ -1,6 +1,6 @@
 # Me
 
-<img src="assets/Pixel_AI_brush.jpg" width="300">
+<img src="assets/Pixel_AI_brush_glitch.gif" width="400">
 
 I make tools, bots, games, videos, pipelines, and whatever else I feel like building — and I ship them.
 

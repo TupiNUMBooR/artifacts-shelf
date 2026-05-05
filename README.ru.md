@@ -1,6 +1,6 @@
 # Я
 
-<img src="assets/Pixel_AI_brush.jpg" width="300">
+<img src="assets/Pixel_AI_brush_glitch.gif" width="400">
 
 Я делаю инструменты, ботов, игры, видео, пайплайны и всё остальное, что мне в моменте хочется собрать — и я это выпускаю.
 
