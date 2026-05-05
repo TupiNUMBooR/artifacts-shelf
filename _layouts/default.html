@@ -12,6 +12,9 @@
       --panel: #333;
       --text: #fff;
       --link: #9f0;
+      --cyan: #20f7ff;
+      --violet: #b020ff;
+      --muted-pixel: #60606a;
     }
 
     * {
@@ -107,6 +110,8 @@
     }
 
     .panel {
+      position: relative;
+      overflow: hidden;
       background: var(--panel);
       border-radius: 18px;
       padding: clamp(16px, 4vw, 24px);
@@ -114,8 +119,90 @@
       box-shadow: 0 0 20px #0008;
     }
 
+    .panel::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0.18;
+      background:
+        radial-gradient(circle at 20% 0%, #9f03, transparent 34%),
+        radial-gradient(circle at 90% 20%, #20f7ff22, transparent 26%);
+    }
+
+    .panel > * {
+      position: relative;
+      z-index: 1;
+    }
+
     .panel h1 {
       margin-top: 0;
+    }
+
+    .cursor-particle-layer {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    .cursor-particle {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: var(--size);
+      height: var(--size);
+      border: 2px solid var(--color);
+      transform:
+        translate(var(--x), var(--y))
+        rotate(var(--rotation))
+        scale(1);
+      opacity: 0;
+      box-shadow:
+        0 0 8px var(--color),
+        inset 0 0 6px #000;
+      animation: cursor-particle-drift var(--life) linear forwards;
+    }
+
+    .cursor-particle::after {
+      content: "";
+      position: absolute;
+      inset: 35%;
+      background: var(--color);
+      opacity: 0.85;
+      box-shadow: 0 0 8px var(--color);
+    }
+
+    @keyframes cursor-particle-drift {
+      0% {
+        opacity: 0;
+        transform:
+          translate(var(--x), var(--y))
+          rotate(var(--rotation))
+          scale(0.35);
+      }
+
+      12% {
+        opacity: 1;
+      }
+
+      100% {
+        opacity: 0;
+        transform:
+          translate(
+            calc(var(--x) + var(--dx)),
+            calc(var(--y) + var(--dy))
+          )
+          rotate(calc(var(--rotation) + var(--spin)))
+          scale(0.9);
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .cursor-particle-layer {
+        display: none;
+      }
     }
 
     @media (max-width: 520px) {
@@ -145,6 +232,8 @@
 </head>
 
 <body>
+  <div id="cursor-particle-layer" class="cursor-particle-layer" aria-hidden="true"></div>
+
   <main>
     <div id="language-bar" class="language-bar">
       <select id="language-select" class="language-select" aria-label="Language">
@@ -188,6 +277,7 @@
         .filter(([, element]) => element);
 
       if (availableLanguages.length === 0) {
+        startCursorParticles();
         return;
       }
 
@@ -268,6 +358,73 @@
       languageSelect.addEventListener('change', () => {
         showLanguage(languageSelect.value);
       });
+
+      startCursorParticles();
+
+      function startCursorParticles() {
+        const layer = document.getElementById('cursor-particle-layer');
+
+        if (!layer || window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+          return;
+        }
+
+        const colors = ['#9f0', '#20f7ff', '#b020ff', '#666a76'];
+        let lastSpawn = 0;
+
+        function random(min, max) {
+          return Math.random() * (max - min) + min;
+        }
+
+        function spawnParticle(x, y) {
+          const particle = document.createElement('span');
+          const color = colors[Math.floor(Math.random() * colors.length)];
+          const size = Math.round(random(7, 18));
+          const driftX = random(-34, 34);
+          const driftY = random(-48, -14);
+
+          particle.className = 'cursor-particle';
+          particle.style.setProperty('--x', `${x + random(-8, 8)}px`);
+          particle.style.setProperty('--y', `${y + random(-8, 8)}px`);
+          particle.style.setProperty('--dx', `${driftX}px`);
+          particle.style.setProperty('--dy', `${driftY}px`);
+          particle.style.setProperty('--size', `${size}px`);
+          particle.style.setProperty('--color', color);
+          particle.style.setProperty('--rotation', `${random(0, 90)}deg`);
+          particle.style.setProperty('--spin', `${random(-90, 90)}deg`);
+          particle.style.setProperty('--life', `${random(650, 1100)}ms`);
+
+          layer.appendChild(particle);
+
+          particle.addEventListener('animationend', () => {
+            particle.remove();
+          }, { once: true });
+        }
+
+        window.addEventListener('pointermove', (event) => {
+          const now = performance.now();
+
+          if (now - lastSpawn < 45) {
+            return;
+          }
+
+          lastSpawn = now;
+
+          const target = event.target;
+          const isHotZone =
+            target.closest &&
+            target.closest('a, img, .panel, .language-select, button');
+
+          if (!isHotZone) {
+            return;
+          }
+
+          spawnParticle(event.clientX, event.clientY);
+
+          if (Math.random() > 0.72) {
+            spawnParticle(event.clientX, event.clientY);
+          }
+        }, { passive: true });
+      }
     })();
   </script>
 </body>
