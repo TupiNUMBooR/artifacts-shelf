@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  <link id="favicon" rel="icon" type="image/svg+xml" href="assets/favicon-1.svg">
   <title>{{ page.title }}</title>
 
   <style>
@@ -158,6 +158,23 @@
 
   <script>
     (() => {
+      const faviconFrames = [
+        'assets/favicon-1.svg',
+        'assets/favicon-2.svg',
+        'assets/favicon-3.svg',
+        'assets/favicon-2.svg'
+      ];
+
+      const favicon = document.getElementById('favicon');
+      let faviconFrame = 0;
+
+      if (favicon) {
+        setInterval(() => {
+          faviconFrame = (faviconFrame + 1) % faviconFrames.length;
+          favicon.href = faviconFrames[faviconFrame];
+        }, 700);
+      }
+
       const contents = {
         en: document.getElementById('content-en'),
         ru: document.getElementById('content-ru')
