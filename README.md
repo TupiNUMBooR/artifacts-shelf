@@ -4,7 +4,7 @@
 
 I make tools, bots, games, videos, pipelines, and whatever else I feel like building — and I ship them.
 
-[GitHub](https://github.com/TupiNUMBooR) | [itch.io](https://tupinumboor.itch.io)
+[GitHub](https://github.com/TupiNUMBooR) | [itch.io](https://tupinumboor.itch.io) | [YouTube](https://www.youtube.com/@SpaceDreamer1111)
 
 
 
@@ -148,8 +148,6 @@ A collection of gameplay and prototype work in Unity
 - **[Windows / WSL Scripts](https://github.com/TupiNUMBooR/scripts-windows)** — I use them every day
 - **[Run AI Locally](https://github.com/TupiNUMBooR/ai)** — Ollama + Docker
 - **[Satisfactory Server](https://github.com/TupiNUMBooR/satisfactory-dedicated)** — Docker setup
-
 - **[Voice AI Bot](https://github.com/TupiNUMBooR/telegram-voice-ai-bot)** — send voice → receive voice
 - **[Weather Bot](https://github.com/TupiNUMBooR/froglyn)** — get weather notifications
-
 - **[AI Philosophy (rus)](https://gist.github.com/TupiNUMBooR/65f5df7f49c1f12828df2b26891311ea)** — how I think about development and AI
