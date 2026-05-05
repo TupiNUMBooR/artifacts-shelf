@@ -1,0 +1,46 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>{{ page.title }}</title>
+
+  <style>
+    :root {
+      --bg: #111;
+      --panel: #333;
+      --text: #fff;
+      --link: #9f0;
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: system-ui, sans-serif;
+    }
+
+    a { color: var(--link); }
+
+    main {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 32px 18px;
+    }
+
+    img {
+      max-width: 100%;
+      border-radius: 12px;
+    }
+
+    h1 {
+      border-bottom: 2px solid var(--link);
+      padding-bottom: 8px;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    {{ content }}
+  </main>
+</body>
+</html>
