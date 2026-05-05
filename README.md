@@ -140,3 +140,16 @@ My game on Steam — a completed and shipped commercial project
 A collection of gameplay and prototype work in Unity
 
 [Examples of my work as Unity Developer - YouTube](https://www.youtube.com/watch?v=jdV6eylSV1o)
+
+
+
+# Other Projects / Tools
+
+- **[Windows / WSL Scripts](https://github.com/TupiNUMBooR/scripts-windows)** — I use them every day
+- **[Run AI Locally](https://github.com/TupiNUMBooR/ai)** — Ollama + Docker
+- **[Satisfactory Server](https://github.com/TupiNUMBooR/satisfactory-dedicated)** — Docker setup
+
+- **[Voice AI Bot](https://github.com/TupiNUMBooR/telegram-voice-ai-bot)** — send voice → receive voice
+- **[Weather Bot](https://github.com/TupiNUMBooR/froglyn)** — get weather notifications
+
+- **[AI Philosophy (rus)](https://gist.github.com/TupiNUMBooR/65f5df7f49c1f12828df2b26891311ea)** — how I think about development and AI
