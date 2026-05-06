@@ -1,6 +1,7 @@
 <!doctype html>
 <html>
 <head>
+  <!-- artifact-shelf-layout-version: particles-2026-05-06-02 -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link id="favicon" rel="icon" type="image/svg+xml" href="assets/favicon-1.svg">
@@ -12,9 +13,6 @@
       --panel: #333;
       --text: #fff;
       --link: #9f0;
-      --cyan: #20f7ff;
-      --violet: #b020ff;
-      --muted-pixel: #60606a;
     }
 
     * {
@@ -110,8 +108,6 @@
     }
 
     .panel {
-      position: relative;
-      overflow: hidden;
       background: var(--panel);
       border-radius: 18px;
       padding: clamp(16px, 4vw, 24px);
@@ -119,71 +115,44 @@
       box-shadow: 0 0 20px #0008;
     }
 
-    .panel::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      pointer-events: none;
-      opacity: 0.18;
-      background:
-        radial-gradient(circle at 20% 0%, #9f03, transparent 34%),
-        radial-gradient(circle at 90% 20%, #20f7ff22, transparent 26%);
-    }
-
-    .panel > * {
-      position: relative;
-      z-index: 1;
-    }
-
     .panel h1 {
       margin-top: 0;
     }
 
-    .cursor-particle-layer {
+    .pixel-brush-particle {
       position: fixed;
-      inset: 0;
-      z-index: 9999;
-      pointer-events: none;
-      overflow: hidden;
-    }
-
-    .cursor-particle {
-      position: absolute;
       left: 0;
       top: 0;
       width: var(--size);
       height: var(--size);
       border: 2px solid var(--color);
-      transform:
-        translate(var(--x), var(--y))
-        rotate(var(--rotation))
-        scale(1);
+      pointer-events: none;
+      z-index: 99999;
       opacity: 0;
       box-shadow:
         0 0 8px var(--color),
-        inset 0 0 6px #000;
-      animation: cursor-particle-drift var(--life) linear forwards;
+        inset 0 0 4px #000;
+      animation: pixel-brush-drift var(--life) linear forwards;
     }
 
-    .cursor-particle::after {
+    .pixel-brush-particle::after {
       content: "";
       position: absolute;
       inset: 35%;
       background: var(--color);
-      opacity: 0.85;
-      box-shadow: 0 0 8px var(--color);
+      box-shadow: 0 0 6px var(--color);
     }
 
-    @keyframes cursor-particle-drift {
+    @keyframes pixel-brush-drift {
       0% {
         opacity: 0;
         transform:
           translate(var(--x), var(--y))
           rotate(var(--rotation))
-          scale(0.35);
+          scale(0.4);
       }
 
-      12% {
+      15% {
         opacity: 1;
       }
 
@@ -195,13 +164,7 @@
             calc(var(--y) + var(--dy))
           )
           rotate(calc(var(--rotation) + var(--spin)))
-          scale(0.9);
-      }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      .cursor-particle-layer {
-        display: none;
+          scale(1);
       }
     }
 
@@ -232,8 +195,6 @@
 </head>
 
 <body>
-  <div id="cursor-particle-layer" class="cursor-particle-layer" aria-hidden="true"></div>
-
   <main>
     <div id="language-bar" class="language-bar">
       <select id="language-select" class="language-select" aria-label="Language">
@@ -247,6 +208,8 @@
 
   <script>
     (() => {
+      console.log('[artifact-shelf] layout version: particles-2026-05-06-02');
+
       const faviconFrames = [
         'assets/favicon-1.svg',
         'assets/favicon-2.svg',
@@ -276,99 +239,136 @@
         .entries(contents)
         .filter(([, element]) => element);
 
-      if (availableLanguages.length === 0) {
-        startCursorParticles();
-        return;
+      if (availableLanguages.length > 0) {
+        function enhanceContent(content) {
+          if (!content || content.dataset.enhanced === 'true') {
+            return;
+          }
+
+          const nodes = Array.from(content.childNodes);
+          let panel = null;
+          const panels = [];
+
+          for (const node of nodes) {
+            const isHeading =
+              node.nodeType === Node.ELEMENT_NODE &&
+              node.tagName === 'H1';
+
+            if (isHeading) {
+              panel = document.createElement('section');
+              panel.className = 'panel';
+              panels.push(panel);
+            }
+
+            if (panel) {
+              panel.appendChild(node);
+            }
+          }
+
+          if (panels.length === 0) {
+            return;
+          }
+
+          content.textContent = '';
+          content.classList.add('enhanced');
+          content.dataset.enhanced = 'true';
+
+          for (const item of panels) {
+            content.appendChild(item);
+          }
+        }
+
+        function normalizeLanguage(language) {
+          return language && language.toLowerCase().startsWith('ru')
+            ? 'ru'
+            : 'en';
+        }
+
+        function getInitialLanguage() {
+          const saved = localStorage.getItem('artifact-shelf-language');
+
+          if (saved === 'en' || saved === 'ru') {
+            return saved;
+          }
+
+          return normalizeLanguage(navigator.language);
+        }
+
+        function showLanguage(language) {
+          const selectedLanguage = contents[language] ? language : 'en';
+
+          for (const [key, content] of Object.entries(contents)) {
+            if (!content) {
+              continue;
+            }
+
+            content.classList.toggle('hidden', key !== selectedLanguage);
+          }
+
+          enhanceContent(contents[selectedLanguage]);
+
+          languageSelect.value = selectedLanguage;
+          localStorage.setItem('artifact-shelf-language', selectedLanguage);
+        }
+
+        languageBar.style.display = 'flex';
+        showLanguage(getInitialLanguage());
+
+        languageSelect.addEventListener('change', () => {
+          showLanguage(languageSelect.value);
+        });
       }
 
-      function enhanceContent(content) {
-        if (!content || content.dataset.enhanced === 'true') {
+      bootPixelBrushParticles();
+
+      function bootPixelBrushParticles() {
+        tryStartPixelBrushParticles();
+        setTimeout(tryStartPixelBrushParticles, 300);
+        setTimeout(tryStartPixelBrushParticles, 1000);
+
+        const observer = new MutationObserver(() => {
+          tryStartPixelBrushParticles();
+        });
+
+        observer.observe(document.documentElement, {
+          childList: true,
+          subtree: true
+        });
+      }
+
+      function tryStartPixelBrushParticles() {
+        if (window.__pixelBrushParticlesStarted) {
           return;
         }
 
-        const nodes = Array.from(content.childNodes);
-        let panel = null;
-        const panels = [];
+        const image = Array
+          .from(document.images)
+          .find((img) => {
+            const source = [
+              img.getAttribute('src') || '',
+              img.currentSrc || '',
+              img.src || ''
+            ].join(' ').toLowerCase();
 
-        for (const node of nodes) {
-          const isHeading =
-            node.nodeType === Node.ELEMENT_NODE &&
-            node.tagName === 'H1';
+            return source.includes('pixel_ai_brush');
+          });
 
-          if (isHeading) {
-            panel = document.createElement('section');
-            panel.className = 'panel';
-            panels.push(panel);
-          }
-
-          if (panel) {
-            panel.appendChild(node);
-          }
-        }
-
-        if (panels.length === 0) {
+        if (!image) {
+          console.log('[pixel-brush] waiting for image...');
           return;
         }
 
-        content.textContent = '';
-        content.classList.add('enhanced');
-        content.dataset.enhanced = 'true';
-
-        for (const item of panels) {
-          content.appendChild(item);
-        }
+        startPixelBrushParticles(image);
       }
 
-      function normalizeLanguage(language) {
-        return language && language.toLowerCase().startsWith('ru')
-          ? 'ru'
-          : 'en';
-      }
-
-      function getInitialLanguage() {
-        const saved = localStorage.getItem('artifact-shelf-language');
-
-        if (saved === 'en' || saved === 'ru') {
-          return saved;
-        }
-
-        return normalizeLanguage(navigator.language);
-      }
-
-      function showLanguage(language) {
-        const selectedLanguage = contents[language] ? language : 'en';
-
-        for (const [key, content] of Object.entries(contents)) {
-          if (!content) {
-            continue;
-          }
-
-          content.classList.toggle('hidden', key !== selectedLanguage);
-        }
-
-        enhanceContent(contents[selectedLanguage]);
-
-        languageSelect.value = selectedLanguage;
-        localStorage.setItem('artifact-shelf-language', selectedLanguage);
-      }
-
-      languageBar.style.display = 'flex';
-      showLanguage(getInitialLanguage());
-
-      languageSelect.addEventListener('change', () => {
-        showLanguage(languageSelect.value);
-      });
-
-      startCursorParticles();
-
-      function startCursorParticles() {
-        const layer = document.getElementById('cursor-particle-layer');
-
-        if (!layer || window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-          return;
-        }
+      function startPixelBrushParticles(image) {
+        window.__pixelBrushParticlesStarted = true;
+        console.log('[pixel-brush] attached to image:', image);
 
         const colors = ['#9f0', '#20f7ff', '#b020ff', '#666a76'];
+        let hovering = false;
+        let pointerX = 0;
+        let pointerY = 0;
         let lastSpawn = 0;
 
         function random(min, max) {
@@ -378,52 +378,62 @@
         function spawnParticle(x, y) {
           const particle = document.createElement('span');
           const color = colors[Math.floor(Math.random() * colors.length)];
-          const size = Math.round(random(7, 18));
-          const driftX = random(-34, 34);
-          const driftY = random(-48, -14);
 
-          particle.className = 'cursor-particle';
+          particle.className = 'pixel-brush-particle';
           particle.style.setProperty('--x', `${x + random(-8, 8)}px`);
           particle.style.setProperty('--y', `${y + random(-8, 8)}px`);
-          particle.style.setProperty('--dx', `${driftX}px`);
-          particle.style.setProperty('--dy', `${driftY}px`);
-          particle.style.setProperty('--size', `${size}px`);
+          particle.style.setProperty('--dx', `${random(-40, 40)}px`);
+          particle.style.setProperty('--dy', `${random(-60, -10)}px`);
+          particle.style.setProperty('--size', `${Math.round(random(6, 16))}px`);
           particle.style.setProperty('--color', color);
           particle.style.setProperty('--rotation', `${random(0, 90)}deg`);
-          particle.style.setProperty('--spin', `${random(-90, 90)}deg`);
-          particle.style.setProperty('--life', `${random(650, 1100)}ms`);
+          particle.style.setProperty('--spin', `${random(-180, 180)}deg`);
+          particle.style.setProperty('--life', `${random(700, 1200)}ms`);
 
-          layer.appendChild(particle);
+          document.body.appendChild(particle);
 
           particle.addEventListener('animationend', () => {
             particle.remove();
           }, { once: true });
         }
 
-        window.addEventListener('pointermove', (event) => {
-          const now = performance.now();
+        image.addEventListener('pointerenter', (event) => {
+          hovering = true;
+          pointerX = event.clientX;
+          pointerY = event.clientY;
+          console.log('[pixel-brush] hover start');
+        });
 
-          if (now - lastSpawn < 45) {
-            return;
+        image.addEventListener('pointermove', (event) => {
+          hovering = true;
+          pointerX = event.clientX;
+          pointerY = event.clientY;
+        });
+
+        image.addEventListener('pointerleave', () => {
+          hovering = false;
+          console.log('[pixel-brush] hover end');
+        });
+
+        function loop() {
+          if (hovering) {
+            const now = performance.now();
+
+            if (now - lastSpawn > 45) {
+              lastSpawn = now;
+
+              spawnParticle(pointerX, pointerY);
+
+              if (Math.random() > 0.7) {
+                spawnParticle(pointerX, pointerY);
+              }
+            }
           }
 
-          lastSpawn = now;
+          requestAnimationFrame(loop);
+        }
 
-          const target = event.target;
-          const isHotZone =
-            target.closest &&
-            target.closest('a, img, .panel, .language-select, button');
-
-          if (!isHotZone) {
-            return;
-          }
-
-          spawnParticle(event.clientX, event.clientY);
-
-          if (Math.random() > 0.72) {
-            spawnParticle(event.clientX, event.clientY);
-          }
-        }, { passive: true });
+        requestAnimationFrame(loop);
       }
     })();
   </script>
