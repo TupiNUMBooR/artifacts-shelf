@@ -1,6 +1,6 @@
 # Artifacts Shelf
 
-# Origin
+## Origin
 
 <img src="assets/Pixel_AI_brush_glitch.gif" width="400">
 
@@ -12,7 +12,7 @@ And I ship it.
 
 
 
-# VYRA
+## VYRA
 
 <img src="assets/VYRA3.png" width="300">
 
@@ -35,7 +35,7 @@ Fully automated development pipeline: build → package → publish to itch.io
 
 
 
-# YouTube Downloader Telegram Bot
+## YouTube Downloader Telegram Bot
 
 <img src="assets/yt-dlp-tg-bot_preview.jpg" width="300">
 
@@ -57,7 +57,7 @@ Automated CI/CD pipeline: builds multiple Docker images and deploys them to a co
 
 
 
-# Klip
+## Klip
 
 <img src="assets/Klip_itch-picture.png" width="200">
 
@@ -80,7 +80,7 @@ Fully automated development pipeline: build → package → publish to itch.io
 
 
 
-# Space Dreamer
+## Space Dreamer
 
 ![](assets/Space_Dreamer.jpg)
 
@@ -104,7 +104,7 @@ Best videos:
 
 
 
-# Quiet Wow
+## Quiet Wow
 
 ![](assets/Quiet_Wow.jpg)
 
@@ -125,7 +125,7 @@ Status: shut down, thinking about new content
 
 
 
-# Space Carrot
+## Space Carrot
 
 <img src="assets/Space_Carrot_Steam_header.jpg" width="300">
 
@@ -137,7 +137,7 @@ My game on Steam — a completed and shipped commercial project
 
 
 
-# Unity Work
+## Unity Work
 
 ![](assets/Examples.gif)
 
@@ -147,7 +147,7 @@ A collection of gameplay and prototype work in Unity
 
 
 
-# Other Projects / Tools
+## Other Projects / Tools
 
 - **[Windows / WSL Scripts](https://github.com/TupiNUMBooR/scripts-windows)** — I use them every day
 - **[Run AI Locally](https://github.com/TupiNUMBooR/ai)** — Ollama + Docker
