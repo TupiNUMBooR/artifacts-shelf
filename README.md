@@ -4,7 +4,7 @@
 
 I make tools, bots, games, videos, pipelines, and whatever else I feel like building — and I ship them.
 
-[GitHub](https://github.com/TupiNUMBooR) \| [itch.io](https://tupinumboor.itch.io) \| [YouTube](https://www.youtube.com/@SpaceDreamer1111)
+[GitHub](https://github.com/TupiNUMBooR) \| [itch.io](https://tupinumboor.itch.io) \| [YouTube](https://www.youtube.com/@SpaceDreamer1111) \| [Telegram](https://t.me/TupiNUMBooR)
 
 
 

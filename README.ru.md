@@ -4,7 +4,7 @@
 
 Я делаю инструменты, ботов, игры, видео, пайплайны и всё остальное, что мне в моменте хочется собрать — и я это выпускаю.
 
-[GitHub](https://github.com/TupiNUMBooR) \| [itch.io](https://tupinumboor.itch.io) \| [YouTube](https://www.youtube.com/@SpaceDreamer1111)
+[GitHub](https://github.com/TupiNUMBooR) \| [itch.io](https://tupinumboor.itch.io) \| [YouTube](https://www.youtube.com/@SpaceDreamer1111) \| [Telegram](https://t.me/TupiNUMBooR)
 
 
 
