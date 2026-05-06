@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
 <head>
-  <!-- version: 2026-05-06-14-10-refactor -->
+  <!-- version: 2026-05-06-14-20-clean-refactor -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link id="favicon" rel="icon" type="image/svg+xml" href="assets/favicon-1.svg">
@@ -15,12 +15,10 @@
       --link: #9f0;
       --cyan: #20f7ff;
       --violet: #b020ff;
-      --muted-pixel: #60606a;
+      --muted: #60606a;
     }
 
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
     body {
       margin: 0;
@@ -31,13 +29,11 @@
       overflow-wrap: anywhere;
     }
 
-    a {
-      color: var(--link);
-    }
+    a { color: var(--link); }
 
     main {
       width: min(100% - 24px, 1200px);
-      margin: 0 auto;
+      margin: auto;
       padding: clamp(18px, 4vw, 36px) 0;
     }
 
@@ -49,39 +45,32 @@
       border-radius: 12px;
     }
 
-    pre {
+    pre,
+    table {
       max-width: 100%;
       overflow-x: auto;
     }
 
-    table {
-      display: block;
-      max-width: 100%;
-      overflow-x: auto;
-    }
+    table { display: block; }
 
     h1,
     h2 {
-      border-bottom: 2px solid var(--link);
+      margin: 0 0 18px;
       padding-bottom: 8px;
+      border-bottom: 2px solid var(--link);
       line-height: 1.15;
     }
 
-    h1 {
-      margin: 0 0 18px;
-      font-size: clamp(2rem, 4vw, 3rem);
-    }
-
-    h2 {
-      margin: 0 0 18px;
-      font-size: clamp(1.7rem, 3vw, 2.35rem);
-    }
+    h1 { font-size: clamp(2rem, 4vw, 3rem); }
+    h2 { font-size: clamp(1.7rem, 3vw, 2.35rem); }
 
     .language-bar {
       display: none;
       justify-content: flex-end;
       margin-bottom: 18px;
     }
+
+    .language-bar.visible { display: flex; }
 
     .language-select {
       max-width: 100%;
@@ -94,25 +83,25 @@
       outline: none;
     }
 
-    .language-select:focus {
-      box-shadow: 0 0 0 2px #9f04;
-    }
+    .language-select:focus { box-shadow: 0 0 0 2px #9f04; }
 
-    .content {
+    .content,
+    .panel {
       background: var(--panel);
       border-radius: 18px;
-      padding: clamp(16px, 4vw, 24px);
       box-shadow: 0 0 20px #0008;
     }
 
-    .content.hidden {
-      display: none;
+    .content {
+      padding: clamp(16px, 4vw, 24px);
     }
 
+    .content.hidden { display: none; }
+
     .content.enhanced {
-      background: transparent;
-      border-radius: 0;
       padding: 0;
+      background: none;
+      border-radius: 0;
       box-shadow: none;
     }
 
@@ -121,10 +110,11 @@
       overflow: hidden;
       margin-bottom: clamp(18px, 5vw, 32px);
       padding: clamp(16px, 4vw, 24px);
-      background: var(--panel);
-      border-radius: 18px;
-      box-shadow: 0 0 20px #0008;
     }
+
+    .panel.hero { padding-block: clamp(22px, 5vw, 34px); }
+    .panel.hero h1 { margin-bottom: 0; }
+    .panel > :last-child { margin-bottom: 0; }
 
     .panel::before {
       content: "";
@@ -142,23 +132,6 @@
       z-index: 1;
     }
 
-    .panel.hero {
-      padding-block: clamp(22px, 5vw, 34px);
-    }
-
-    .panel.hero h1 {
-      margin-bottom: 0;
-    }
-
-    .panel h1,
-    .panel h2 {
-      margin-top: 0;
-    }
-
-    .panel > :last-child {
-      margin-bottom: 0;
-    }
-
     .pixel-brush-particle {
       position: fixed;
       left: 0;
@@ -169,9 +142,7 @@
       border: 2px solid var(--color);
       pointer-events: none;
       opacity: 0;
-      box-shadow:
-        0 0 8px var(--color),
-        inset 0 0 4px #000;
+      box-shadow: 0 0 8px var(--color), inset 0 0 4px #000;
       animation: pixel-brush-drift var(--life) linear forwards;
     }
 
@@ -187,53 +158,33 @@
     @keyframes pixel-brush-drift {
       0% {
         opacity: 0;
-        transform:
-          translate(var(--x), var(--y))
-          rotate(var(--rotation))
-          scale(0.35);
+        transform: translate(var(--x), var(--y)) rotate(var(--rotation)) scale(0.35);
       }
 
-      12% {
-        opacity: 1;
-      }
+      12% { opacity: 1; }
 
       100% {
         opacity: 0;
         transform:
-          translate(
-            calc(var(--x) + var(--dx)),
-            calc(var(--y) + var(--dy))
-          )
+          translate(calc(var(--x) + var(--dx)), calc(var(--y) + var(--dy)))
           rotate(calc(var(--rotation) + var(--spin)))
           scale(0.9);
       }
     }
 
     @media (max-width: 520px) {
-      main {
-        width: min(100% - 16px, 960px);
-      }
+      main { width: min(100% - 16px, 960px); }
 
-      .language-bar {
-        justify-content: stretch;
-      }
-
-      .language-select {
-        width: 100%;
-      }
+      .language-bar { justify-content: stretch; }
+      .language-select { width: 100%; }
 
       .content,
       .panel {
         border-radius: 14px;
       }
 
-      h1 {
-        font-size: 1.75rem;
-      }
-
-      h2 {
-        font-size: 1.45rem;
-      }
+      h1 { font-size: 1.75rem; }
+      h2 { font-size: 1.45rem; }
     }
   </style>
 </head>
@@ -252,18 +203,22 @@
 
   <script>
     (() => {
-      const fallbackTitle = document.title;
+      const titleFallback = document.title;
+      const $ = (id) => document.getElementById(id);
+      const random = (min, max) => Math.random() * (max - min) + min;
+      const pick = (items) => items[Math.floor(Math.random() * items.length)];
 
-      animateFavicon();
-      initLanguage();
-      initPixelBrushParticles();
+      init();
+
+      function init() {
+        animateFavicon();
+        initLanguage();
+        initPixelBrushParticles();
+      }
 
       function animateFavicon() {
-        const favicon = document.getElementById('favicon');
-
-        if (!favicon) {
-          return;
-        }
+        const favicon = $('favicon');
+        if (!favicon) return;
 
         const frames = [
           'assets/favicon-1.svg',
@@ -272,196 +227,147 @@
           'assets/favicon-2.svg'
         ];
 
-        let index = 0;
+        let frame = 0;
 
         setInterval(() => {
-          index = (index + 1) % frames.length;
-          favicon.href = frames[index];
+          frame = (frame + 1) % frames.length;
+          favicon.href = frames[frame];
         }, 700);
       }
 
       function initLanguage() {
-        const contents = {
-          en: document.getElementById('content-en'),
-          ru: document.getElementById('content-ru')
+        const content = {
+          en: $('content-en'),
+          ru: $('content-ru')
         };
 
-        const availableLanguages = Object
-          .entries(contents)
-          .filter(([, content]) => content);
+        if (!content.en && !content.ru) return;
 
-        if (availableLanguages.length === 0) {
-          return;
-        }
+        const bar = $('language-bar');
+        const select = $('language-select');
 
-        const languageBar = document.getElementById('language-bar');
-        const languageSelect = document.getElementById('language-select');
+        bar.classList.add('visible');
+        select.addEventListener('change', () => show(select.value));
 
-        languageBar.style.display = 'flex';
-        showLanguage(getInitialLanguage());
+        show(getSavedLanguage() || getBrowserLanguage());
 
-        languageSelect.addEventListener('change', () => {
-          showLanguage(languageSelect.value);
-        });
+        function show(language) {
+          const selected = content[language] ? language : 'en';
 
-        function showLanguage(language) {
-          const selectedLanguage = contents[language] ? language : 'en';
-
-          for (const [key, content] of Object.entries(contents)) {
-            if (content) {
-              content.classList.toggle('hidden', key !== selectedLanguage);
-            }
+          for (const key of Object.keys(content)) {
+            content[key]?.classList.toggle('hidden', key !== selected);
           }
 
-          const content = contents[selectedLanguage];
+          enhance(content[selected]);
+          syncTitle(content[selected]);
 
-          enhanceContent(content);
-          syncPageTitle(content);
-
-          languageSelect.value = selectedLanguage;
-          localStorage.setItem('artifact-shelf-language', selectedLanguage);
+          select.value = selected;
+          localStorage.setItem('artifact-shelf-language', selected);
         }
 
-        function getInitialLanguage() {
+        function getSavedLanguage() {
           const saved = localStorage.getItem('artifact-shelf-language');
+          return content[saved] ? saved : '';
+        }
 
-          if (saved === 'en' || saved === 'ru') {
-            return saved;
-          }
-
-          return navigator.language.toLowerCase().startsWith('ru')
-            ? 'ru'
-            : 'en';
+        function getBrowserLanguage() {
+          return navigator.language.toLowerCase().startsWith('ru') ? 'ru' : 'en';
         }
       }
 
-      function enhanceContent(content) {
-        if (!content || content.dataset.enhanced === 'true') {
-          return;
-        }
+      function enhance(content) {
+        if (!content || content.dataset.enhanced) return;
 
         const panels = [];
         let panel = null;
 
-        for (const node of Array.from(content.childNodes)) {
-          const isHeading =
-            node.nodeType === Node.ELEMENT_NODE &&
-            (node.tagName === 'H1' || node.tagName === 'H2');
-
-          if (isHeading) {
+        for (const node of [...content.childNodes]) {
+          if (isSectionHeading(node)) {
             panel = document.createElement('section');
-            panel.className = node.tagName === 'H1'
-              ? 'panel hero'
-              : 'panel';
+            panel.className = node.tagName === 'H1' ? 'panel hero' : 'panel';
             panels.push(panel);
           }
 
-          if (panel) {
-            panel.appendChild(node);
-          }
+          panel?.appendChild(node);
         }
 
-        if (panels.length === 0) {
-          return;
-        }
+        if (!panels.length) return;
 
-        content.textContent = '';
+        content.replaceChildren(...panels);
         content.classList.add('enhanced');
         content.dataset.enhanced = 'true';
-        content.append(...panels);
       }
 
-      function syncPageTitle(content) {
-        const heading = content && content.querySelector('h1');
-        const title = heading && heading.textContent.trim();
+      function isSectionHeading(node) {
+        return node.nodeType === Node.ELEMENT_NODE && ['H1', 'H2'].includes(node.tagName);
+      }
 
-        document.title = title || fallbackTitle;
+      function syncTitle(content) {
+        const title = content?.querySelector('h1')?.textContent.trim();
+        document.title = title || titleFallback;
       }
 
       function initPixelBrushParticles() {
-        const images = Array
-          .from(document.images)
-          .filter((img) => {
-            const source = `${img.getAttribute('src') || ''} ${img.currentSrc || ''} ${img.src || ''}`;
-            return source.toLowerCase().includes('pixel_ai_brush');
-          });
+        const images = [...document.images].filter((img) =>
+          `${img.src} ${img.currentSrc} ${img.getAttribute('src')}`
+            .toLowerCase()
+            .includes('pixel_ai_brush')
+        );
 
-        if (images.length === 0) {
-          return;
+        images.forEach(bindParticles);
+      }
+
+      function bindParticles(image) {
+        if (image.dataset.pixelBrushParticles) return;
+        image.dataset.pixelBrushParticles = 'true';
+
+        let hovering = false;
+        let lastSpawn = 0;
+        let x = 0;
+        let y = 0;
+
+        image.addEventListener('pointerenter', move);
+        image.addEventListener('pointermove', move);
+        image.addEventListener('pointerleave', () => hovering = false);
+
+        requestAnimationFrame(tick);
+
+        function move(event) {
+          hovering = true;
+          x = event.clientX;
+          y = event.clientY;
         }
 
-        const colors = ['#9f0', '#20f7ff', '#b020ff', '#60606a'];
-
-        for (const image of images) {
-          bindParticles(image);
-        }
-
-        function bindParticles(image) {
-          if (image.dataset.pixelBrushParticles === 'true') {
-            return;
+        function tick(now) {
+          if (hovering && now - lastSpawn > 45) {
+            lastSpawn = now;
+            spawnParticle(x, y);
+            if (Math.random() > 0.7) spawnParticle(x, y);
           }
-
-          image.dataset.pixelBrushParticles = 'true';
-
-          let isHovering = false;
-          let x = 0;
-          let y = 0;
-          let lastSpawnAt = 0;
-
-          image.addEventListener('pointerenter', updatePointer);
-          image.addEventListener('pointermove', updatePointer);
-          image.addEventListener('pointerleave', () => {
-            isHovering = false;
-          });
 
           requestAnimationFrame(tick);
-
-          function updatePointer(event) {
-            isHovering = true;
-            x = event.clientX;
-            y = event.clientY;
-          }
-
-          function tick() {
-            if (isHovering && performance.now() - lastSpawnAt >= 45) {
-              lastSpawnAt = performance.now();
-              spawnParticle(x, y);
-
-              if (Math.random() > 0.7) {
-                spawnParticle(x, y);
-              }
-            }
-
-            requestAnimationFrame(tick);
-          }
-        }
-
-        function spawnParticle(originX, originY) {
-          const particle = document.createElement('span');
-          const color = pick(colors);
-
-          particle.className = 'pixel-brush-particle';
-          particle.style.setProperty('--x', `${originX + random(-8, 8)}px`);
-          particle.style.setProperty('--y', `${originY + random(-8, 8)}px`);
-          particle.style.setProperty('--dx', `${random(-40, 40)}px`);
-          particle.style.setProperty('--dy', `${random(-60, -10)}px`);
-          particle.style.setProperty('--size', `${Math.round(random(6, 16))}px`);
-          particle.style.setProperty('--color', color);
-          particle.style.setProperty('--rotation', `${random(0, 90)}deg`);
-          particle.style.setProperty('--spin', `${random(-180, 180)}deg`);
-          particle.style.setProperty('--life', `${random(700, 1200)}ms`);
-
-          document.body.appendChild(particle);
-          particle.addEventListener('animationend', () => particle.remove(), { once: true });
         }
       }
 
-      function random(min, max) {
-        return Math.random() * (max - min) + min;
-      }
+      function spawnParticle(x, y) {
+        const particle = document.createElement('span');
+        const color = pick(['#9f0', '#20f7ff', '#b020ff', '#60606a']);
 
-      function pick(items) {
-        return items[Math.floor(Math.random() * items.length)];
+        particle.className = 'pixel-brush-particle';
+        particle.style.cssText = `
+          --x: ${x + random(-8, 8)}px;
+          --y: ${y + random(-8, 8)}px;
+          --dx: ${random(-40, 40)}px;
+          --dy: ${random(-60, -10)}px;
+          --size: ${Math.round(random(6, 16))}px;
+          --color: ${color};
+          --rotation: ${random(0, 90)}deg;
+          --spin: ${random(-180, 180)}deg;
+          --life: ${random(700, 1200)}ms;
+        `;
+
+        document.body.appendChild(particle);
+        particle.addEventListener('animationend', () => particle.remove(), { once: true });
       }
     })();
   </script>
