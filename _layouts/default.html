@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
 <head>
-  <!-- artifact-shelf-layout-version: particles-clean-2026-05-06-13-26 -->
+  <!-- artifact-shelf-layout-version: h1-h2-panels-title-sync-2026-05-06-13-49 -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link id="favicon" rel="icon" type="image/svg+xml" href="assets/favicon-1.svg">
@@ -36,7 +36,7 @@
     }
 
     main {
-      width: min(100% - 24px, 960px);
+      width: min(100% - 24px, 1200px);
       margin: 0 auto;
       padding: clamp(18px, 4vw, 36px) 0;
     }
@@ -99,15 +99,21 @@
       box-shadow: none;
     }
 
-    h1 {
+    h1,
+    h2 {
       border-bottom: 2px solid var(--link);
       padding-bottom: 8px;
-      margin-top: 48px;
       line-height: 1.15;
     }
 
-    h1:first-child {
-      margin-top: 0;
+    h1 {
+      margin: 0 0 18px;
+      font-size: clamp(2rem, 4vw, 3rem);
+    }
+
+    h2 {
+      margin: 0 0 18px;
+      font-size: clamp(1.7rem, 3vw, 2.35rem);
     }
 
     .panel {
@@ -136,8 +142,21 @@
       z-index: 1;
     }
 
-    .panel h1 {
+    .panel.hero {
+      padding-block: clamp(22px, 5vw, 34px);
+    }
+
+    .panel.hero h1 {
+      margin-bottom: 0;
+    }
+
+    .panel h1,
+    .panel h2 {
       margin-top: 0;
+    }
+
+    .panel > :last-child {
+      margin-bottom: 0;
     }
 
     .pixel-brush-particle {
@@ -209,8 +228,11 @@
       }
 
       h1 {
-        font-size: 1.55rem;
-        margin-top: 36px;
+        font-size: 1.75rem;
+      }
+
+      h2 {
+        font-size: 1.45rem;
       }
     }
   </style>
@@ -230,6 +252,8 @@
 
   <script>
     (() => {
+      const fallbackTitle = document.title;
+
       const faviconFrames = [
         'assets/favicon-1.svg',
         'assets/favicon-2.svg',
@@ -284,13 +308,16 @@
         const panels = [];
 
         for (const node of nodes) {
-          const isHeading =
+          const isPanelHeading =
             node.nodeType === Node.ELEMENT_NODE &&
-            node.tagName === 'H1';
+            (node.tagName === 'H1' || node.tagName === 'H2');
 
-          if (isHeading) {
+          if (isPanelHeading) {
             panel = document.createElement('section');
-            panel.className = 'panel';
+            panel.className = node.tagName === 'H1'
+              ? 'panel hero'
+              : 'panel';
+
             panels.push(panel);
           }
 
@@ -340,9 +367,18 @@
         }
 
         enhanceContent(contents[selectedLanguage]);
+        syncPageTitle(contents[selectedLanguage]);
 
         languageSelect.value = selectedLanguage;
         localStorage.setItem('artifact-shelf-language', selectedLanguage);
+      }
+
+      function syncPageTitle(content) {
+        const heading = content && content.querySelector('h1');
+
+        document.title = heading && heading.textContent.trim()
+          ? heading.textContent.trim()
+          : fallbackTitle;
       }
 
       function bootPixelBrushParticles() {

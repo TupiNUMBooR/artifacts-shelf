@@ -1,12 +1,12 @@
 # Artifacts Shelf
 
-
-
-# Me
+# Origin
 
 <img src="assets/Pixel_AI_brush_glitch.gif" width="400">
 
-I make tools, bots, games, videos, pipelines, and whatever else I feel like building — and I ship them.
+I make tools, bots, games, videos, pipelines.
+Whatever I feel like building in the moment.
+And I ship it.
 
 [GitHub](https://github.com/TupiNUMBooR) \| [itch.io](https://tupinumboor.itch.io) \| [YouTube](https://www.youtube.com/@SpaceDreamer1111) \| [Telegram](https://t.me/TupiNUMBooR)
 

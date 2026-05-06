@@ -1,18 +1,18 @@
 # Полка Артефактов
 
-
-
-# Я
+## Источник
 
 <img src="assets/Pixel_AI_brush_glitch.gif" width="400">
 
-Я делаю инструменты, ботов, игры, видео, пайплайны и всё остальное, что мне в моменте хочется собрать — и я это выпускаю.
+Я делаю инструменты, ботов, игры, видео, пайплайны.
+Всё, что хочется собрать в моменте.
+И выпускаю это.
 
 [GitHub](https://github.com/TupiNUMBooR) \| [itch.io](https://tupinumboor.itch.io) \| [YouTube](https://www.youtube.com/@SpaceDreamer1111) \| [Telegram](https://t.me/TupiNUMBooR)
 
 
 
-# VYRA
+## VYRA
 
 <img src="assets/VYRA3.png" width="300">
 
@@ -35,7 +35,7 @@ VYRA — это минималистичный оверлей-дневник д�
 
 
 
-# Telegram-бот для скачивания YouTube
+## Telegram-бот для скачивания YouTube
 
 <img src="assets/yt-dlp-tg-bot_preview.jpg" width="300">
 
@@ -57,7 +57,7 @@ Telegram-бот, который скачивает YouTube-видео через
 
 
 
-# Klip
+## Klip
 
 <img src="assets/Klip_itch-picture.png" width="200">
 
@@ -80,7 +80,7 @@ Klip — это маленький десктопный питомец для Wi
 
 
 
-# Space Dreamer
+## Space Dreamer
 
 ![](assets/Space_Dreamer.jpg)
 
@@ -106,7 +106,7 @@ Klip — это маленький десктопный питомец для Wi
 
 
 
-# Quiet Wow
+## Quiet Wow
 
 ![](assets/Quiet_Wow.jpg)
 
@@ -128,7 +128,7 @@ Klip — это маленький десктопный питомец для Wi
 
 
 
-# Space Carrot
+## Space Carrot
 
 <img src="assets/Space_Carrot_Steam_header.jpg" width="300">
 
@@ -140,7 +140,7 @@ Klip — это маленький десктопный питомец для Wi
 
 
 
-# Unity Work
+## Unity Work
 
 ![](assets/Examples.gif)
 
@@ -150,7 +150,7 @@ Klip — это маленький десктопный питомец для Wi
 
 
 
-# Другие проекты / инструменты
+## Другие проекты / инструменты
 
 * **[Windows / WSL Scripts](https://github.com/TupiNUMBooR/scripts-windows)** — использую каждый день
 * **[Run AI Locally](https://github.com/TupiNUMBooR/ai)** — Ollama + Docker
