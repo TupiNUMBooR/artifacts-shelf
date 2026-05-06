@@ -379,48 +379,61 @@
       }
 
       function initPixelBrushParticles() {
-        const image = Array
+        const images = Array
           .from(document.images)
-          .find((img) => {
+          .filter((img) => {
             const source = `${img.getAttribute('src') || ''} ${img.currentSrc || ''} ${img.src || ''}`;
             return source.toLowerCase().includes('pixel_ai_brush');
           });
 
-        if (!image) {
+        if (images.length === 0) {
           return;
         }
 
         const colors = ['#9f0', '#20f7ff', '#b020ff', '#60606a'];
-        let isHovering = false;
-        let x = 0;
-        let y = 0;
-        let lastSpawnAt = 0;
 
-        image.addEventListener('pointerenter', updatePointer);
-        image.addEventListener('pointermove', updatePointer);
-        image.addEventListener('pointerleave', () => {
-          isHovering = false;
-        });
-
-        requestAnimationFrame(tick);
-
-        function updatePointer(event) {
-          isHovering = true;
-          x = event.clientX;
-          y = event.clientY;
+        for (const image of images) {
+          bindParticles(image);
         }
 
-        function tick() {
-          if (isHovering && performance.now() - lastSpawnAt >= 45) {
-            lastSpawnAt = performance.now();
-            spawnParticle(x, y);
-
-            if (Math.random() > 0.7) {
-              spawnParticle(x, y);
-            }
+        function bindParticles(image) {
+          if (image.dataset.pixelBrushParticles === 'true') {
+            return;
           }
 
+          image.dataset.pixelBrushParticles = 'true';
+
+          let isHovering = false;
+          let x = 0;
+          let y = 0;
+          let lastSpawnAt = 0;
+
+          image.addEventListener('pointerenter', updatePointer);
+          image.addEventListener('pointermove', updatePointer);
+          image.addEventListener('pointerleave', () => {
+            isHovering = false;
+          });
+
           requestAnimationFrame(tick);
+
+          function updatePointer(event) {
+            isHovering = true;
+            x = event.clientX;
+            y = event.clientY;
+          }
+
+          function tick() {
+            if (isHovering && performance.now() - lastSpawnAt >= 45) {
+              lastSpawnAt = performance.now();
+              spawnParticle(x, y);
+
+              if (Math.random() > 0.7) {
+                spawnParticle(x, y);
+              }
+            }
+
+            requestAnimationFrame(tick);
+          }
         }
 
         function spawnParticle(originX, originY) {
