@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
 <head>
-  <!-- artifact-shelf-layout-version: particles-2026-05-06-02 -->
+  <!-- artifact-shelf-layout-version: particles-clean-2026-05-06-13-26 -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link id="favicon" rel="icon" type="image/svg+xml" href="assets/favicon-1.svg">
@@ -13,6 +13,9 @@
       --panel: #333;
       --text: #fff;
       --link: #9f0;
+      --cyan: #20f7ff;
+      --violet: #b020ff;
+      --muted-pixel: #60606a;
     }
 
     * {
@@ -89,6 +92,13 @@
       display: none;
     }
 
+    .content.enhanced {
+      background: transparent;
+      border-radius: 0;
+      padding: 0;
+      box-shadow: none;
+    }
+
     h1 {
       border-bottom: 2px solid var(--link);
       padding-bottom: 8px;
@@ -100,19 +110,30 @@
       margin-top: 0;
     }
 
-    .content.enhanced {
-      background: transparent;
-      border-radius: 0;
-      padding: 0;
-      box-shadow: none;
-    }
-
     .panel {
+      position: relative;
+      overflow: hidden;
       background: var(--panel);
       border-radius: 18px;
       padding: clamp(16px, 4vw, 24px);
       margin-bottom: clamp(18px, 5vw, 32px);
       box-shadow: 0 0 20px #0008;
+    }
+
+    .panel::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0.18;
+      background:
+        radial-gradient(circle at 20% 0%, #9f03, transparent 34%),
+        radial-gradient(circle at 90% 20%, #20f7ff22, transparent 26%);
+    }
+
+    .panel > * {
+      position: relative;
+      z-index: 1;
     }
 
     .panel h1 {
@@ -140,6 +161,7 @@
       position: absolute;
       inset: 35%;
       background: var(--color);
+      opacity: 0.85;
       box-shadow: 0 0 6px var(--color);
     }
 
@@ -149,10 +171,10 @@
         transform:
           translate(var(--x), var(--y))
           rotate(var(--rotation))
-          scale(0.4);
+          scale(0.35);
       }
 
-      15% {
+      12% {
         opacity: 1;
       }
 
@@ -164,7 +186,7 @@
             calc(var(--y) + var(--dy))
           )
           rotate(calc(var(--rotation) + var(--spin)))
-          scale(1);
+          scale(0.9);
       }
     }
 
@@ -208,8 +230,6 @@
 
   <script>
     (() => {
-      console.log('[artifact-shelf] layout version: particles-2026-05-06-02');
-
       const faviconFrames = [
         'assets/favicon-1.svg',
         'assets/favicon-2.svg',
@@ -240,77 +260,12 @@
         .filter(([, element]) => element);
 
       if (availableLanguages.length > 0) {
-        function enhanceContent(content) {
-          if (!content || content.dataset.enhanced === 'true') {
-            return;
-          }
+        initLanguageSwitch();
+      }
 
-          const nodes = Array.from(content.childNodes);
-          let panel = null;
-          const panels = [];
+      bootPixelBrushParticles();
 
-          for (const node of nodes) {
-            const isHeading =
-              node.nodeType === Node.ELEMENT_NODE &&
-              node.tagName === 'H1';
-
-            if (isHeading) {
-              panel = document.createElement('section');
-              panel.className = 'panel';
-              panels.push(panel);
-            }
-
-            if (panel) {
-              panel.appendChild(node);
-            }
-          }
-
-          if (panels.length === 0) {
-            return;
-          }
-
-          content.textContent = '';
-          content.classList.add('enhanced');
-          content.dataset.enhanced = 'true';
-
-          for (const item of panels) {
-            content.appendChild(item);
-          }
-        }
-
-        function normalizeLanguage(language) {
-          return language && language.toLowerCase().startsWith('ru')
-            ? 'ru'
-            : 'en';
-        }
-
-        function getInitialLanguage() {
-          const saved = localStorage.getItem('artifact-shelf-language');
-
-          if (saved === 'en' || saved === 'ru') {
-            return saved;
-          }
-
-          return normalizeLanguage(navigator.language);
-        }
-
-        function showLanguage(language) {
-          const selectedLanguage = contents[language] ? language : 'en';
-
-          for (const [key, content] of Object.entries(contents)) {
-            if (!content) {
-              continue;
-            }
-
-            content.classList.toggle('hidden', key !== selectedLanguage);
-          }
-
-          enhanceContent(contents[selectedLanguage]);
-
-          languageSelect.value = selectedLanguage;
-          localStorage.setItem('artifact-shelf-language', selectedLanguage);
-        }
-
+      function initLanguageSwitch() {
         languageBar.style.display = 'flex';
         showLanguage(getInitialLanguage());
 
@@ -319,10 +274,80 @@
         });
       }
 
-      bootPixelBrushParticles();
+      function enhanceContent(content) {
+        if (!content || content.dataset.enhanced === 'true') {
+          return;
+        }
+
+        const nodes = Array.from(content.childNodes);
+        let panel = null;
+        const panels = [];
+
+        for (const node of nodes) {
+          const isHeading =
+            node.nodeType === Node.ELEMENT_NODE &&
+            node.tagName === 'H1';
+
+          if (isHeading) {
+            panel = document.createElement('section');
+            panel.className = 'panel';
+            panels.push(panel);
+          }
+
+          if (panel) {
+            panel.appendChild(node);
+          }
+        }
+
+        if (panels.length === 0) {
+          return;
+        }
+
+        content.textContent = '';
+        content.classList.add('enhanced');
+        content.dataset.enhanced = 'true';
+
+        for (const item of panels) {
+          content.appendChild(item);
+        }
+      }
+
+      function normalizeLanguage(language) {
+        return language && language.toLowerCase().startsWith('ru')
+          ? 'ru'
+          : 'en';
+      }
+
+      function getInitialLanguage() {
+        const saved = localStorage.getItem('artifact-shelf-language');
+
+        if (saved === 'en' || saved === 'ru') {
+          return saved;
+        }
+
+        return normalizeLanguage(navigator.language);
+      }
+
+      function showLanguage(language) {
+        const selectedLanguage = contents[language] ? language : 'en';
+
+        for (const [key, content] of Object.entries(contents)) {
+          if (!content) {
+            continue;
+          }
+
+          content.classList.toggle('hidden', key !== selectedLanguage);
+        }
+
+        enhanceContent(contents[selectedLanguage]);
+
+        languageSelect.value = selectedLanguage;
+        localStorage.setItem('artifact-shelf-language', selectedLanguage);
+      }
 
       function bootPixelBrushParticles() {
         tryStartPixelBrushParticles();
+
         setTimeout(tryStartPixelBrushParticles, 300);
         setTimeout(tryStartPixelBrushParticles, 1000);
 
@@ -341,29 +366,31 @@
           return;
         }
 
-        const image = Array
-          .from(document.images)
-          .find((img) => {
-            const source = [
-              img.getAttribute('src') || '',
-              img.currentSrc || '',
-              img.src || ''
-            ].join(' ').toLowerCase();
-
-            return source.includes('pixel_ai_brush');
-          });
+        const image = findPixelBrushImage();
 
         if (!image) {
-          console.log('[pixel-brush] waiting for image...');
           return;
         }
 
         startPixelBrushParticles(image);
       }
 
+      function findPixelBrushImage() {
+        return Array
+          .from(document.images)
+          .find((image) => {
+            const source = [
+              image.getAttribute('src') || '',
+              image.currentSrc || '',
+              image.src || ''
+            ].join(' ').toLowerCase();
+
+            return source.includes('pixel_ai_brush');
+          });
+      }
+
       function startPixelBrushParticles(image) {
         window.__pixelBrushParticlesStarted = true;
-        console.log('[pixel-brush] attached to image:', image);
 
         const colors = ['#9f0', '#20f7ff', '#b020ff', '#666a76'];
         let hovering = false;
@@ -371,8 +398,41 @@
         let pointerY = 0;
         let lastSpawn = 0;
 
-        function random(min, max) {
-          return Math.random() * (max - min) + min;
+        image.addEventListener('pointerenter', updatePointer);
+        image.addEventListener('pointermove', updatePointer);
+        image.addEventListener('pointerleave', () => {
+          hovering = false;
+        });
+
+        requestAnimationFrame(loop);
+
+        function updatePointer(event) {
+          hovering = true;
+          pointerX = event.clientX;
+          pointerY = event.clientY;
+        }
+
+        function loop() {
+          if (hovering) {
+            spawnParticles();
+          }
+
+          requestAnimationFrame(loop);
+        }
+
+        function spawnParticles() {
+          const now = performance.now();
+
+          if (now - lastSpawn < 45) {
+            return;
+          }
+
+          lastSpawn = now;
+          spawnParticle(pointerX, pointerY);
+
+          if (Math.random() > 0.7) {
+            spawnParticle(pointerX, pointerY);
+          }
         }
 
         function spawnParticle(x, y) {
@@ -397,43 +457,9 @@
           }, { once: true });
         }
 
-        image.addEventListener('pointerenter', (event) => {
-          hovering = true;
-          pointerX = event.clientX;
-          pointerY = event.clientY;
-          console.log('[pixel-brush] hover start');
-        });
-
-        image.addEventListener('pointermove', (event) => {
-          hovering = true;
-          pointerX = event.clientX;
-          pointerY = event.clientY;
-        });
-
-        image.addEventListener('pointerleave', () => {
-          hovering = false;
-          console.log('[pixel-brush] hover end');
-        });
-
-        function loop() {
-          if (hovering) {
-            const now = performance.now();
-
-            if (now - lastSpawn > 45) {
-              lastSpawn = now;
-
-              spawnParticle(pointerX, pointerY);
-
-              if (Math.random() > 0.7) {
-                spawnParticle(pointerX, pointerY);
-              }
-            }
-          }
-
-          requestAnimationFrame(loop);
+        function random(min, max) {
+          return Math.random() * (max - min) + min;
         }
-
-        requestAnimationFrame(loop);
       }
     })();
   </script>
