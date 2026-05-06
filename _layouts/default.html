@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
 <head>
-  <!-- artifact-shelf-layout-version: h1-h2-panels-title-sync-2026-05-06-13-49 -->
+  <!-- version: 2026-05-06-14-10-refactor -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link id="favicon" rel="icon" type="image/svg+xml" href="assets/favicon-1.svg">
@@ -50,14 +50,31 @@
     }
 
     pre {
-      overflow-x: auto;
       max-width: 100%;
+      overflow-x: auto;
     }
 
     table {
       display: block;
       max-width: 100%;
       overflow-x: auto;
+    }
+
+    h1,
+    h2 {
+      border-bottom: 2px solid var(--link);
+      padding-bottom: 8px;
+      line-height: 1.15;
+    }
+
+    h1 {
+      margin: 0 0 18px;
+      font-size: clamp(2rem, 4vw, 3rem);
+    }
+
+    h2 {
+      margin: 0 0 18px;
+      font-size: clamp(1.7rem, 3vw, 2.35rem);
     }
 
     .language-bar {
@@ -67,14 +84,14 @@
     }
 
     .language-select {
+      max-width: 100%;
+      padding: 8px 12px;
       background: var(--panel);
       color: var(--text);
       border: 1px solid var(--link);
       border-radius: 10px;
-      padding: 8px 12px;
       font: inherit;
       outline: none;
-      max-width: 100%;
     }
 
     .language-select:focus {
@@ -99,30 +116,13 @@
       box-shadow: none;
     }
 
-    h1,
-    h2 {
-      border-bottom: 2px solid var(--link);
-      padding-bottom: 8px;
-      line-height: 1.15;
-    }
-
-    h1 {
-      margin: 0 0 18px;
-      font-size: clamp(2rem, 4vw, 3rem);
-    }
-
-    h2 {
-      margin: 0 0 18px;
-      font-size: clamp(1.7rem, 3vw, 2.35rem);
-    }
-
     .panel {
       position: relative;
       overflow: hidden;
+      margin-bottom: clamp(18px, 5vw, 32px);
+      padding: clamp(16px, 4vw, 24px);
       background: var(--panel);
       border-radius: 18px;
-      padding: clamp(16px, 4vw, 24px);
-      margin-bottom: clamp(18px, 5vw, 32px);
       box-shadow: 0 0 20px #0008;
     }
 
@@ -163,11 +163,11 @@
       position: fixed;
       left: 0;
       top: 0;
+      z-index: 99999;
       width: var(--size);
       height: var(--size);
       border: 2px solid var(--color);
       pointer-events: none;
-      z-index: 99999;
       opacity: 0;
       box-shadow:
         0 0 8px var(--color),
@@ -254,48 +254,85 @@
     (() => {
       const fallbackTitle = document.title;
 
-      const faviconFrames = [
-        'assets/favicon-1.svg',
-        'assets/favicon-2.svg',
-        'assets/favicon-3.svg',
-        'assets/favicon-2.svg'
-      ];
+      animateFavicon();
+      initLanguage();
+      initPixelBrushParticles();
 
-      const favicon = document.getElementById('favicon');
-      let faviconFrame = 0;
+      function animateFavicon() {
+        const favicon = document.getElementById('favicon');
 
-      if (favicon) {
+        if (!favicon) {
+          return;
+        }
+
+        const frames = [
+          'assets/favicon-1.svg',
+          'assets/favicon-2.svg',
+          'assets/favicon-3.svg',
+          'assets/favicon-2.svg'
+        ];
+
+        let index = 0;
+
         setInterval(() => {
-          faviconFrame = (faviconFrame + 1) % faviconFrames.length;
-          favicon.href = faviconFrames[faviconFrame];
+          index = (index + 1) % frames.length;
+          favicon.href = frames[index];
         }, 700);
       }
 
-      const contents = {
-        en: document.getElementById('content-en'),
-        ru: document.getElementById('content-ru')
-      };
+      function initLanguage() {
+        const contents = {
+          en: document.getElementById('content-en'),
+          ru: document.getElementById('content-ru')
+        };
 
-      const languageBar = document.getElementById('language-bar');
-      const languageSelect = document.getElementById('language-select');
+        const availableLanguages = Object
+          .entries(contents)
+          .filter(([, content]) => content);
 
-      const availableLanguages = Object
-        .entries(contents)
-        .filter(([, element]) => element);
+        if (availableLanguages.length === 0) {
+          return;
+        }
 
-      if (availableLanguages.length > 0) {
-        initLanguageSwitch();
-      }
+        const languageBar = document.getElementById('language-bar');
+        const languageSelect = document.getElementById('language-select');
 
-      bootPixelBrushParticles();
-
-      function initLanguageSwitch() {
         languageBar.style.display = 'flex';
         showLanguage(getInitialLanguage());
 
         languageSelect.addEventListener('change', () => {
           showLanguage(languageSelect.value);
         });
+
+        function showLanguage(language) {
+          const selectedLanguage = contents[language] ? language : 'en';
+
+          for (const [key, content] of Object.entries(contents)) {
+            if (content) {
+              content.classList.toggle('hidden', key !== selectedLanguage);
+            }
+          }
+
+          const content = contents[selectedLanguage];
+
+          enhanceContent(content);
+          syncPageTitle(content);
+
+          languageSelect.value = selectedLanguage;
+          localStorage.setItem('artifact-shelf-language', selectedLanguage);
+        }
+
+        function getInitialLanguage() {
+          const saved = localStorage.getItem('artifact-shelf-language');
+
+          if (saved === 'en' || saved === 'ru') {
+            return saved;
+          }
+
+          return navigator.language.toLowerCase().startsWith('ru')
+            ? 'ru'
+            : 'en';
+        }
       }
 
       function enhanceContent(content) {
@@ -303,21 +340,19 @@
           return;
         }
 
-        const nodes = Array.from(content.childNodes);
-        let panel = null;
         const panels = [];
+        let panel = null;
 
-        for (const node of nodes) {
-          const isPanelHeading =
+        for (const node of Array.from(content.childNodes)) {
+          const isHeading =
             node.nodeType === Node.ELEMENT_NODE &&
             (node.tagName === 'H1' || node.tagName === 'H2');
 
-          if (isPanelHeading) {
+          if (isHeading) {
             panel = document.createElement('section');
             panel.className = node.tagName === 'H1'
               ? 'panel hero'
               : 'panel';
-
             panels.push(panel);
           }
 
@@ -333,151 +368,68 @@
         content.textContent = '';
         content.classList.add('enhanced');
         content.dataset.enhanced = 'true';
-
-        for (const item of panels) {
-          content.appendChild(item);
-        }
-      }
-
-      function normalizeLanguage(language) {
-        return language && language.toLowerCase().startsWith('ru')
-          ? 'ru'
-          : 'en';
-      }
-
-      function getInitialLanguage() {
-        const saved = localStorage.getItem('artifact-shelf-language');
-
-        if (saved === 'en' || saved === 'ru') {
-          return saved;
-        }
-
-        return normalizeLanguage(navigator.language);
-      }
-
-      function showLanguage(language) {
-        const selectedLanguage = contents[language] ? language : 'en';
-
-        for (const [key, content] of Object.entries(contents)) {
-          if (!content) {
-            continue;
-          }
-
-          content.classList.toggle('hidden', key !== selectedLanguage);
-        }
-
-        enhanceContent(contents[selectedLanguage]);
-        syncPageTitle(contents[selectedLanguage]);
-
-        languageSelect.value = selectedLanguage;
-        localStorage.setItem('artifact-shelf-language', selectedLanguage);
+        content.append(...panels);
       }
 
       function syncPageTitle(content) {
         const heading = content && content.querySelector('h1');
+        const title = heading && heading.textContent.trim();
 
-        document.title = heading && heading.textContent.trim()
-          ? heading.textContent.trim()
-          : fallbackTitle;
+        document.title = title || fallbackTitle;
       }
 
-      function bootPixelBrushParticles() {
-        tryStartPixelBrushParticles();
-
-        setTimeout(tryStartPixelBrushParticles, 300);
-        setTimeout(tryStartPixelBrushParticles, 1000);
-
-        const observer = new MutationObserver(() => {
-          tryStartPixelBrushParticles();
-        });
-
-        observer.observe(document.documentElement, {
-          childList: true,
-          subtree: true
-        });
-      }
-
-      function tryStartPixelBrushParticles() {
-        if (window.__pixelBrushParticlesStarted) {
-          return;
-        }
-
-        const image = findPixelBrushImage();
+      function initPixelBrushParticles() {
+        const image = Array
+          .from(document.images)
+          .find((img) => {
+            const source = `${img.getAttribute('src') || ''} ${img.currentSrc || ''} ${img.src || ''}`;
+            return source.toLowerCase().includes('pixel_ai_brush');
+          });
 
         if (!image) {
           return;
         }
 
-        startPixelBrushParticles(image);
-      }
-
-      function findPixelBrushImage() {
-        return Array
-          .from(document.images)
-          .find((image) => {
-            const source = [
-              image.getAttribute('src') || '',
-              image.currentSrc || '',
-              image.src || ''
-            ].join(' ').toLowerCase();
-
-            return source.includes('pixel_ai_brush');
-          });
-      }
-
-      function startPixelBrushParticles(image) {
-        window.__pixelBrushParticlesStarted = true;
-
-        const colors = ['#9f0', '#20f7ff', '#b020ff', '#666a76'];
-        let hovering = false;
-        let pointerX = 0;
-        let pointerY = 0;
-        let lastSpawn = 0;
+        const colors = ['#9f0', '#20f7ff', '#b020ff', '#60606a'];
+        let isHovering = false;
+        let x = 0;
+        let y = 0;
+        let lastSpawnAt = 0;
 
         image.addEventListener('pointerenter', updatePointer);
         image.addEventListener('pointermove', updatePointer);
         image.addEventListener('pointerleave', () => {
-          hovering = false;
+          isHovering = false;
         });
 
-        requestAnimationFrame(loop);
+        requestAnimationFrame(tick);
 
         function updatePointer(event) {
-          hovering = true;
-          pointerX = event.clientX;
-          pointerY = event.clientY;
+          isHovering = true;
+          x = event.clientX;
+          y = event.clientY;
         }
 
-        function loop() {
-          if (hovering) {
-            spawnParticles();
+        function tick() {
+          if (isHovering && performance.now() - lastSpawnAt >= 45) {
+            lastSpawnAt = performance.now();
+            spawnParticle(x, y);
+
+            if (Math.random() > 0.7) {
+              spawnParticle(x, y);
+            }
           }
 
-          requestAnimationFrame(loop);
+          requestAnimationFrame(tick);
         }
 
-        function spawnParticles() {
-          const now = performance.now();
-
-          if (now - lastSpawn < 45) {
-            return;
-          }
-
-          lastSpawn = now;
-          spawnParticle(pointerX, pointerY);
-
-          if (Math.random() > 0.7) {
-            spawnParticle(pointerX, pointerY);
-          }
-        }
-
-        function spawnParticle(x, y) {
+        function spawnParticle(originX, originY) {
           const particle = document.createElement('span');
-          const color = colors[Math.floor(Math.random() * colors.length)];
+          const color = pick(colors);
 
           particle.className = 'pixel-brush-particle';
-          particle.style.setProperty('--x', `${x + random(-8, 8)}px`);
-          particle.style.setProperty('--y', `${y + random(-8, 8)}px`);
+          particle.style.setProperty('--x', `${originX + random(-8, 8)}px`);
+          particle.style.setProperty('--y', `${originY + random(-8, 8)}px`);
           particle.style.setProperty('--dx', `${random(-40, 40)}px`);
           particle.style.setProperty('--dy', `${random(-60, -10)}px`);
           particle.style.setProperty('--size', `${Math.round(random(6, 16))}px`);
@@ -487,15 +439,16 @@
           particle.style.setProperty('--life', `${random(700, 1200)}ms`);
 
           document.body.appendChild(particle);
-
-          particle.addEventListener('animationend', () => {
-            particle.remove();
-          }, { once: true });
+          particle.addEventListener('animationend', () => particle.remove(), { once: true });
         }
+      }
 
-        function random(min, max) {
-          return Math.random() * (max - min) + min;
-        }
+      function random(min, max) {
+        return Math.random() * (max - min) + min;
+      }
+
+      function pick(items) {
+        return items[Math.floor(Math.random() * items.length)];
       }
     })();
   </script>
