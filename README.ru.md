@@ -33,6 +33,8 @@
 
 `youtube-uploader` сканирует workspace, загружает готовые папки, записывает маркеры результата и отправляет уведомления в Telegram.
 
+[GitHub](https://github.com/TupiNUMBooR/youtube-uploader)
+
 
 
 ## VYRA

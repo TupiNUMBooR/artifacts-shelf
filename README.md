@@ -33,6 +33,8 @@ Another tool creates a folder with:
 
 `youtube-uploader` scans the workspace, uploads ready folders, writes result markers, and sends Telegram notifications.
 
+[GitHub](https://github.com/TupiNUMBooR/youtube-uploader)
+
 
 
 ## VYRA
