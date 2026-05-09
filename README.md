@@ -12,6 +12,29 @@ And I ship it.
 
 
 
+# youtube-uploader
+
+![](assets/youtube-uploader.jpg)
+
+Tiny Docker service that uploads prepared folders from `./.workspace` to YouTube.
+
+![CI/CD](https://github.com/TupiNUMBooR/youtube-uploader/actions/workflows/ci-cd.yml/badge.svg)
+![Latest Release](https://img.shields.io/github/release/TupiNUMBooR/youtube-uploader)
+![Release Date](https://img.shields.io/github/release-date/TupiNUMBooR/youtube-uploader)
+
+![Top Lang](https://img.shields.io/github/languages/top/TupiNUMBooR/youtube-uploader?logo=python)
+![Docker](https://img.shields.io/badge/docker-ghcr-blue?logo=docker)
+
+Another tool creates a folder with:
+
+* video
+* metadata
+* optional thumbnail
+
+`youtube-uploader` scans the workspace, uploads ready folders, writes result markers, and sends Telegram notifications.
+
+
+
 ## VYRA
 
 <img src="assets/VYRA3.png" width="300">

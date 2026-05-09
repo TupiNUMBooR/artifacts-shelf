@@ -12,6 +12,29 @@
 
 
 
+# youtube-uploader
+
+![](assets/youtube-uploader.jpg)
+
+Маленький Docker сервис, который загружает подготовленные папки из `./.workspace` на YouTube.
+
+![CI/CD](https://github.com/TupiNUMBooR/youtube-uploader/actions/workflows/ci-cd.yml/badge.svg)
+![Latest Release](https://img.shields.io/github/release/TupiNUMBooR/youtube-uploader)
+![Release Date](https://img.shields.io/github/release-date/TupiNUMBooR/youtube-uploader)
+
+![Top Lang](https://img.shields.io/github/languages/top/TupiNUMBooR/youtube-uploader?logo=python)
+![Docker](https://img.shields.io/badge/docker-ghcr-blue?logo=docker)
+
+Другой инструмент создаёт папку с:
+
+* видео
+* метаданными
+* необязательной превьюшкой
+
+`youtube-uploader` сканирует workspace, загружает готовые папки, записывает маркеры результата и отправляет уведомления в Telegram.
+
+
+
 ## VYRA
 
 <img src="assets/VYRA3.png" width="300">
