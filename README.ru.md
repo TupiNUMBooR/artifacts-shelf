@@ -12,13 +12,13 @@
 
 
 
-## Автоматизированный пайплайн создания YouTube Shorts с ИИ
+## Автогенерация YouTube Shorts
 
 ![](assets/Quiet_Wow.jpg)
 
 [Quiet Wow | YouTube](https://www.youtube.com/@QuietWow999)
 
-Пайплайн:
+Полностью автоматизированный ИИ пайплайн:
 - ChatGPT → сценарий + метаданные + валидация
 - TTS → озвучка
 - Sora → генерация видео

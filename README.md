@@ -12,13 +12,13 @@ And I ship it.
 
 
 
-## Automated AI-powered YouTube Shorts creation pipeline
+## Automated Shorts Production Pipeline
 
 ![](assets/Quiet_Wow.jpg)
 
 [Quiet Wow | YouTube](https://www.youtube.com/@QuietWow999)
 
-Pipeline:
+Fully automated AI pipeline:
 - ChatGPT → script + metadata + validation
 - TTS → voiceover
 - Sora → video generation
