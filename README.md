@@ -12,6 +12,25 @@ And I ship it.
 
 
 
+## Automated AI-powered YouTube Shorts creation pipeline
+
+![](assets/Quiet_Wow.jpg)
+
+[Quiet Wow | YouTube](https://www.youtube.com/@QuietWow999)
+
+Pipeline:
+- ChatGPT → script + metadata + validation
+- TTS → voiceover
+- Sora → video generation
+- video assembly
+- automatic YouTube publishing
+
+~$0.50 per video
+
+Currently paused, thinking about what this project should mutate into next
+
+
+
 # youtube-uploader
 
 ![](assets/youtube-uploader.jpg)
@@ -126,27 +145,6 @@ Best videos:
 - [Music Is Still Good - YouTube](https://www.youtube.com/watch?v=yqbogGzaNZc)
 - [Panic - YouTube](https://www.youtube.com/watch?v=TQ_8J_Ll0iE)
 - [Into the Mist — The Forest Rune Awakens - YouTube](https://www.youtube.com/watch?v=IvCzkjfWpLg&t=531s)
-
-
-
-## Quiet Wow
-
-![](assets/Quiet_Wow.jpg)
-
-My YouTube channel about interesting facts
-
-[YouTube](https://www.youtube.com/@QuietWow999)
-
-Features a fully automated video pipeline:
-- ChatGPT script + metadata generation + validation →
-- OpenAI TTS narration →
-- Sora 2 video generation →
-- video assembly →
-- YouTube upload
-
-Estimated cost: about $0.50 per video.
-
-Status: shut down, thinking about new content
 
 
 

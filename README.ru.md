@@ -12,6 +12,25 @@
 
 
 
+## Автоматизированный пайплайн создания YouTube Shorts с ИИ
+
+![](assets/Quiet_Wow.jpg)
+
+[Quiet Wow | YouTube](https://www.youtube.com/@QuietWow999)
+
+Пайплайн:
+- ChatGPT → сценарий + метаданные + валидация
+- TTS → озвучка
+- Sora → генерация видео
+- сборка видео
+- автопубликация на YouTube
+
+~$0.50 за ролик
+
+Сейчас на паузе, думаю, во что мутировать дальше
+
+
+
 # youtube-uploader
 
 ![](assets/youtube-uploader.jpg)
@@ -128,28 +147,6 @@ Klip — это маленький десктопный питомец для Wi
 * [Music Is Still Good - YouTube](https://www.youtube.com/watch?v=yqbogGzaNZc)
 * [Panic - YouTube](https://www.youtube.com/watch?v=TQ_8J_Ll0iE)
 * [Into the Mist — The Forest Rune Awakens - YouTube](https://www.youtube.com/watch?v=IvCzkjfWpLg&t=531s)
-
-
-
-## Quiet Wow
-
-![](assets/Quiet_Wow.jpg)
-
-Мой YouTube-канал про интересные факты
-
-[YouTube](https://www.youtube.com/@QuietWow999)
-
-С полностью автоматизированным видеопайплайном:
-
-* ChatGPT: генерация скрипта + метаданных + валидация →
-* OpenAI TTS: озвучка →
-* Sora 2: генерация видео →
-* сборка видео →
-* загрузка на YouTube
-
-Примерная стоимость: около $0.50 за видео.
-
-Статус: остановлен, думаю над новым контентом
 
 
 
