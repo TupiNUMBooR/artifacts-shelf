@@ -92,12 +92,12 @@ function drawRain() {
 }
 
 function drawLamp(time) {
-  const cx = width - 170;
-  const cy = 150;
+  const cx = width - 67;
+  const cy = 120;
 
   const sway = Math.sin(time * 0.0014) * 4;
   const flicker = 0.86 + Math.sin(time * 0.023) * 0.08 + Math.random() * 0.06;
-  const scale = width < 700 ? 0.55 : 0.72;
+  const scale = width < 700 ? 0.35 : 0.5;
 
   ctx.save();
   ctx.translate(cx + sway, cy);
