@@ -186,10 +186,40 @@
       h1 { font-size: 1.75rem; }
       h2 { font-size: 1.45rem; }
     }
+
+    .storm-lamp-frame {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      width: 100vw;
+      height: 100vh;
+      border: 0;
+      pointer-events: none;
+      opacity: 0.9;
+    }
+
+    main {
+      position: relative;
+      z-index: 2;
+    }
+
+    .panel,
+    .content {
+      position: relative;
+      z-index: 3;
+    }
   </style>
 </head>
 
 <body>
+  <iframe
+    class="storm-lamp-frame"
+    src="lamp2.html"
+    title="Storm lamp"
+    aria-hidden="true"
+    tabindex="-1"
+  ></iframe>
+
   <main>
     <div id="language-bar" class="language-bar">
       <select id="language-select" class="language-select" aria-label="Language">

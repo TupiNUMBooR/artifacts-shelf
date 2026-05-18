@@ -1,0 +1,219 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style>
+  html,
+  body {
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background: transparent;
+  }
+
+  canvas {
+    display: block;
+    width: 100vw;
+    height: 100vh;
+  }
+</style>
+</head>
+
+<body>
+<canvas id="lamp"></canvas>
+
+<script>
+const canvas = document.getElementById('lamp');
+const ctx = canvas.getContext('2d');
+
+let width = 0;
+let height = 0;
+let dpr = 1;
+
+const rain = Array.from({ length: 150 }, () => ({
+  x: Math.random(),
+  y: Math.random(),
+  len: 10 + Math.random() * 22,
+  speed: 4 + Math.random() * 9
+}));
+
+resize();
+window.addEventListener('resize', resize);
+requestAnimationFrame(loop);
+
+function resize() {
+  dpr = window.devicePixelRatio || 1;
+  width = innerWidth;
+  height = innerHeight;
+
+  canvas.width = width * dpr;
+  canvas.height = height * dpr;
+  canvas.style.width = width + 'px';
+  canvas.style.height = height + 'px';
+
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+}
+
+function loop(time) {
+  ctx.clearRect(0, 0, width, height);
+  drawRain();
+  drawLamp(time);
+  requestAnimationFrame(loop);
+}
+
+function drawRain() {
+  ctx.strokeStyle = 'rgba(170, 210, 255, 0.16)';
+  ctx.lineWidth = 1;
+
+  for (const drop of rain) {
+    const x = drop.x * width;
+    const y = drop.y * height;
+
+    ctx.beginPath();
+    ctx.moveTo(x, y);
+    ctx.lineTo(x - 8, y + drop.len);
+    ctx.stroke();
+
+    drop.x -= 0.0018;
+    drop.y += drop.speed / height;
+
+    if (drop.y > 1.08) {
+      drop.x = Math.random() * 1.1;
+      drop.y = -0.08;
+    }
+
+    if (drop.x < -0.08) {
+      drop.x = 1.08;
+    }
+  }
+}
+
+function drawLamp(time) {
+  const cx = width - 170;
+  const cy = 150;
+
+  const sway = Math.sin(time * 0.0014) * 4;
+  const flicker = 0.86 + Math.sin(time * 0.023) * 0.08 + Math.random() * 0.06;
+  const scale = width < 700 ? 0.55 : 0.72;
+
+  ctx.save();
+  ctx.translate(cx + sway, cy);
+  ctx.scale(scale, scale);
+  ctx.rotate(Math.sin(time * 0.0012) * 0.025);
+
+  const glow = ctx.createRadialGradient(0, 30, 10, 0, 30, 250 * flicker);
+  glow.addColorStop(0, 'rgba(255, 180, 70, 0.42)');
+  glow.addColorStop(0.38, 'rgba(255, 120, 40, 0.12)');
+  glow.addColorStop(1, 'rgba(255, 80, 20, 0)');
+
+  ctx.fillStyle = glow;
+  ctx.beginPath();
+  ctx.arc(0, 30, 260, 0, Math.PI * 2);
+  ctx.fill();
+
+  ctx.lineCap = 'round';
+  ctx.lineJoin = 'round';
+
+  ctx.strokeStyle = '#5d6670';
+  ctx.lineWidth = 7;
+  ctx.beginPath();
+  ctx.arc(0, -115, 62, Math.PI * 1.1, Math.PI * 1.9);
+  ctx.stroke();
+
+  ctx.fillStyle = '#303842';
+  ctx.strokeStyle = '#9aa4ad';
+  ctx.lineWidth = 3;
+  roundRect(-55, -102, 110, 28, 12, true, true);
+
+  ctx.fillStyle = '#222a33';
+  roundRect(-36, -135, 72, 38, 16, true, true);
+
+  ctx.strokeStyle = '#717c86';
+  ctx.lineWidth = 5;
+  ctx.beginPath();
+  ctx.moveTo(-62, -78);
+  ctx.bezierCurveTo(-100, -20, -85, 80, -48, 132);
+  ctx.moveTo(62, -78);
+  ctx.bezierCurveTo(100, -20, 85, 80, 48, 132);
+  ctx.stroke();
+
+  const glass = ctx.createLinearGradient(-55, -60, 55, 120);
+  glass.addColorStop(0, 'rgba(190, 230, 255, 0.18)');
+  glass.addColorStop(0.45, 'rgba(120, 170, 210, 0.08)');
+  glass.addColorStop(1, 'rgba(240, 250, 255, 0.12)');
+
+  ctx.fillStyle = glass;
+  ctx.strokeStyle = 'rgba(210, 230, 245, 0.55)';
+  ctx.lineWidth = 3;
+
+  ctx.beginPath();
+  ctx.moveTo(-44, -72);
+  ctx.bezierCurveTo(-64, -25, -60, 70, -35, 120);
+  ctx.quadraticCurveTo(0, 142, 35, 120);
+  ctx.bezierCurveTo(60, 70, 64, -25, 44, -72);
+  ctx.closePath();
+  ctx.fill();
+  ctx.stroke();
+
+  ctx.strokeStyle = 'rgba(255,255,255,0.25)';
+  ctx.lineWidth = 2;
+  ctx.beginPath();
+  ctx.moveTo(-25, -45);
+  ctx.bezierCurveTo(-38, 15, -35, 65, -18, 105);
+  ctx.stroke();
+
+  ctx.save();
+  ctx.translate(Math.sin(time * 0.018) * 3, 40);
+
+  const flame = ctx.createRadialGradient(0, 15, 5, 0, 10, 55 * flicker);
+  flame.addColorStop(0, 'white');
+  flame.addColorStop(0.25, '#fff59d');
+  flame.addColorStop(0.55, '#ff9800');
+  flame.addColorStop(1, 'rgba(255, 60, 0, 0)');
+
+  ctx.fillStyle = flame;
+  ctx.beginPath();
+  ctx.moveTo(0, -55 * flicker);
+  ctx.bezierCurveTo(35, -15, 22, 35, 0, 52);
+  ctx.bezierCurveTo(-25, 30, -34, -12, 0, -55 * flicker);
+  ctx.fill();
+
+  ctx.fillStyle = 'rgba(255,255,220,0.9)';
+  ctx.beginPath();
+  ctx.moveTo(0, -28 * flicker);
+  ctx.bezierCurveTo(13, -5, 8, 25, 0, 34);
+  ctx.bezierCurveTo(-10, 18, -12, -4, 0, -28 * flicker);
+  ctx.fill();
+
+  ctx.restore();
+
+  ctx.strokeStyle = '#1b1209';
+  ctx.lineWidth = 5;
+  ctx.beginPath();
+  ctx.moveTo(0, 75);
+  ctx.lineTo(0, 42);
+  ctx.stroke();
+
+  ctx.fillStyle = '#2b333d';
+  ctx.strokeStyle = '#99a3ad';
+  ctx.lineWidth = 3;
+  roundRect(-66, 112, 132, 34, 16, true, true);
+
+  ctx.fillStyle = '#1f262e';
+  roundRect(-48, 142, 96, 26, 12, true, true);
+
+  ctx.restore();
+}
+
+function roundRect(x, y, width, height, radius, fill, stroke) {
+  ctx.beginPath();
+  ctx.roundRect(x, y, width, height, radius);
+  if (fill) ctx.fill();
+  if (stroke) ctx.stroke();
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8" />
+<title>Storm Lamp</title>
+<style>
+  html, body {
+    margin: 0;
+    height: 100%;
+    background: radial-gradient(circle at center, #17202a, #05070a 70%);
+    overflow: hidden;
+  }
+
+  canvas {
+    display: block;
+    width: 100vw;
+    height: 100vh;
+  }
+</style>
+</head>
+<body>
+<canvas id="lamp"></canvas>
+
+<script>
+const canvas = document.getElementById("lamp");
+const ctx = canvas.getContext("2d");
+
+let w, h, dpr;
+
+function resize() {
+  dpr = window.devicePixelRatio || 1;
+  w = canvas.width = innerWidth * dpr;
+  h = canvas.height = innerHeight * dpr;
+  canvas.style.width = innerWidth + "px";
+  canvas.style.height = innerHeight + "px";
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+}
+
+window.addEventListener("resize", resize);
+resize();
+
+const rain = Array.from({ length: 180 }, () => ({
+  x: Math.random() * innerWidth,
+  y: Math.random() * innerHeight,
+  len: 8 + Math.random() * 20,
+  speed: 5 + Math.random() * 10
+}));
+
+function drawLamp(t) {
+  const cx = innerWidth / 2;
+  const cy = innerHeight / 2 + 30;
+
+  const sway = Math.sin(t * 0.0014) * 5;
+  const flicker = 0.85 + Math.sin(t * 0.023) * 0.08 + Math.random() * 0.08;
+
+  ctx.save();
+  ctx.translate(cx + sway, cy);
+  ctx.rotate(Math.sin(t * 0.0012) * 0.025);
+
+  // glow
+  const glow = ctx.createRadialGradient(0, 30, 10, 0, 30, 230 * flicker);
+  glow.addColorStop(0, "rgba(255, 180, 70, 0.55)");
+  glow.addColorStop(0.35, "rgba(255, 120, 40, 0.16)");
+  glow.addColorStop(1, "rgba(255, 80, 20, 0)");
+  ctx.fillStyle = glow;
+  ctx.beginPath();
+  ctx.arc(0, 30, 260, 0, Math.PI * 2);
+  ctx.fill();
+
+  ctx.lineCap = "round";
+  ctx.lineJoin = "round";
+
+  // handle
+  ctx.strokeStyle = "#5d6670";
+  ctx.lineWidth = 7;
+  ctx.beginPath();
+  ctx.arc(0, -115, 62, Math.PI * 1.1, Math.PI * 1.9);
+  ctx.stroke();
+
+  // top cap
+  ctx.fillStyle = "#303842";
+  ctx.strokeStyle = "#9aa4ad";
+  ctx.lineWidth = 3;
+  roundRect(-55, -102, 110, 28, 12, true, true);
+
+  ctx.fillStyle = "#222a33";
+  roundRect(-36, -135, 72, 38, 16, true, true);
+
+  // side wires
+  ctx.strokeStyle = "#717c86";
+  ctx.lineWidth = 5;
+  ctx.beginPath();
+  ctx.moveTo(-62, -78);
+  ctx.bezierCurveTo(-100, -20, -85, 80, -48, 132);
+  ctx.moveTo(62, -78);
+  ctx.bezierCurveTo(100, -20, 85, 80, 48, 132);
+  ctx.stroke();
+
+  // glass body
+  const glass = ctx.createLinearGradient(-55, -60, 55, 120);
+  glass.addColorStop(0, "rgba(190, 230, 255, 0.18)");
+  glass.addColorStop(0.45, "rgba(120, 170, 210, 0.08)");
+  glass.addColorStop(1, "rgba(240, 250, 255, 0.12)");
+
+  ctx.fillStyle = glass;
+  ctx.strokeStyle = "rgba(210, 230, 245, 0.55)";
+  ctx.lineWidth = 3;
+
+  ctx.beginPath();
+  ctx.moveTo(-44, -72);
+  ctx.bezierCurveTo(-64, -25, -60, 70, -35, 120);
+  ctx.quadraticCurveTo(0, 142, 35, 120);
+  ctx.bezierCurveTo(60, 70, 64, -25, 44, -72);
+  ctx.closePath();
+  ctx.fill();
+  ctx.stroke();
+
+  // glass shine
+  ctx.strokeStyle = "rgba(255,255,255,0.25)";
+  ctx.lineWidth = 2;
+  ctx.beginPath();
+  ctx.moveTo(-25, -45);
+  ctx.bezierCurveTo(-38, 15, -35, 65, -18, 105);
+  ctx.stroke();
+
+  // flame
+  ctx.save();
+  ctx.translate(Math.sin(t * 0.018) * 3, 40);
+
+  const flameGrad = ctx.createRadialGradient(0, 15, 5, 0, 10, 55 * flicker);
+  flameGrad.addColorStop(0, "white");
+  flameGrad.addColorStop(0.25, "#fff59d");
+  flameGrad.addColorStop(0.55, "#ff9800");
+  flameGrad.addColorStop(1, "rgba(255, 60, 0, 0)");
+
+  ctx.fillStyle = flameGrad;
+  ctx.beginPath();
+  ctx.moveTo(0, -55 * flicker);
+  ctx.bezierCurveTo(35, -15, 22, 35, 0, 52);
+  ctx.bezierCurveTo(-25, 30, -34, -12, 0, -55 * flicker);
+  ctx.fill();
+
+  ctx.fillStyle = "rgba(255,255,220,0.9)";
+  ctx.beginPath();
+  ctx.moveTo(0, -28 * flicker);
+  ctx.bezierCurveTo(13, -5, 8, 25, 0, 34);
+  ctx.bezierCurveTo(-10, 18, -12, -4, 0, -28 * flicker);
+  ctx.fill();
+
+  ctx.restore();
+
+  // wick
+  ctx.strokeStyle = "#1b1209";
+  ctx.lineWidth = 5;
+  ctx.beginPath();
+  ctx.moveTo(0, 75);
+  ctx.lineTo(0, 42);
+  ctx.stroke();
+
+  // base
+  ctx.fillStyle = "#2b333d";
+  ctx.strokeStyle = "#99a3ad";
+  ctx.lineWidth = 3;
+  roundRect(-66, 112, 132, 34, 16, true, true);
+
+  ctx.fillStyle = "#1f262e";
+  roundRect(-48, 142, 96, 26, 12, true, true);
+
+  ctx.restore();
+}
+
+function roundRect(x, y, width, height, radius, fill, stroke) {
+  ctx.beginPath();
+  ctx.roundRect(x, y, width, height, radius);
+  if (fill) ctx.fill();
+  if (stroke) ctx.stroke();
+}
+
+function drawRain() {
+  ctx.strokeStyle = "rgba(170, 210, 255, 0.22)";
+  ctx.lineWidth = 1;
+
+  for (const drop of rain) {
+    ctx.beginPath();
+    ctx.moveTo(drop.x, drop.y);
+    ctx.lineTo(drop.x - 8, drop.y + drop.len);
+    ctx.stroke();
+
+    drop.x -= 1.7;
+    drop.y += drop.speed;
+
+    if (drop.y > innerHeight + 30) {
+      drop.x = Math.random() * innerWidth + 80;
+      drop.y = -30;
+    }
+    if (drop.x < -40) {
+      drop.x = innerWidth + 40;
+    }
+  }
+}
+
+function loop(t) {
+  ctx.clearRect(0, 0, innerWidth, innerHeight);
+
+  drawRain();
+
+  ctx.fillStyle = "rgba(0, 0, 0, 0.25)";
+  ctx.fillRect(0, 0, innerWidth, innerHeight);
+
+  drawLamp(t);
+
+  requestAnimationFrame(loop);
+}
+
+requestAnimationFrame(loop);
+</script>
+</body>
+</html>
