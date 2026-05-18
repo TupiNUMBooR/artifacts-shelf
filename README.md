@@ -16,7 +16,7 @@ And I ship it.
 
 ![](assets/Quiet_Wow.jpg)
 
-[Quiet Wow | YouTube](https://www.youtube.com/@QuietWow999)
+[Quiet Wow \| YouTube](https://www.youtube.com/@QuietWow999)
 
 Fully automated AI pipeline:
 - ChatGPT → script + metadata + validation

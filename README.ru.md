@@ -16,7 +16,7 @@
 
 ![](assets/Quiet_Wow.jpg)
 
-[Quiet Wow | YouTube](https://www.youtube.com/@QuietWow999)
+[Quiet Wow \| YouTube](https://www.youtube.com/@QuietWow999)
 
 Полностью автоматизированный ИИ пайплайн:
 - ChatGPT → сценарий + метаданные + валидация
