@@ -31,6 +31,21 @@
 
 
 
+# pipeline-cleaner
+
+![](assets/pipeline-cleaner.jpg)
+
+Крошечный Docker-сервис, который периодически удаляет старые директории из примонтированных папок.
+
+![CI/CD](https://github.com/TupiNUMBooR/pipeline-cleaner/actions/workflows/ci-cd.yml/badge.svg)
+![Latest Release](https://img.shields.io/github/release/TupiNUMBooR/pipeline-cleaner)
+![Release Date](https://img.shields.io/github/release-date/TupiNUMBooR/pipeline-cleaner)
+
+![Top Lang](https://img.shields.io/github/languages/top/TupiNUMBooR/pipeline-cleaner?logo=gnubash)
+![Docker](https://img.shields.io/badge/docker-ghcr-blue?logo=docker)
+
+
+
 # youtube-uploader
 
 ![](assets/youtube-uploader-2.jpg)
