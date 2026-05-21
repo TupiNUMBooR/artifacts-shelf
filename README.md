@@ -33,7 +33,7 @@ Currently paused, thinking about what this project should mutate into next
 
 # youtube-uploader
 
-![](assets/youtube-uploader.jpg)
+![](assets/youtube-uploader-2.jpg)
 
 Tiny Docker service that uploads prepared folders from `./.workspace` to YouTube.
 

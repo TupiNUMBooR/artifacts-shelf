@@ -33,7 +33,7 @@
 
 # youtube-uploader
 
-![](assets/youtube-uploader.jpg)
+![](assets/youtube-uploader-2.jpg)
 
 Маленький Docker сервис, который загружает подготовленные папки из `./.workspace` на YouTube.
 
