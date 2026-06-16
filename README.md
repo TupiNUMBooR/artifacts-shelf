@@ -31,6 +31,31 @@ Currently paused, thinking about what this project should mutate into next
 
 
 
+## YouTube Downloader Telegram Bot
+
+![](assets/yt-dlp-tg-bot_telegram_usecase.jpg)
+
+A Telegram bot that downloads YouTube videos using `yt-dlp`, exposes them via a temporary HTTP link, and sends the result back to Telegram
+
+<img src="assets/yt-dlp-tg-bot_telegram_qr.jpg" width="300">
+<img src="assets/yt-dlp-tg-bot_avatar.jpg" width="300">
+
+[@ytdlp_202604_bot](https://t.me/ytdlp_202604_bot) \| [GitHub](https://github.com/TupiNUMBooR/yt-dlp-tg-bot)
+
+---
+
+![CI/CD](https://github.com/TupiNUMBooR/yt-dlp-tg-bot/actions/workflows/ci-cd.yml/badge.svg)
+![Latest Release](https://img.shields.io/github/release/TupiNUMBooR/yt-dlp-tg-bot)
+![Release Date](https://img.shields.io/github/release-date/TupiNUMBooR/yt-dlp-tg-bot)
+
+![Top Lang](https://img.shields.io/github/languages/top/TupiNUMBooR/yt-dlp-tg-bot?logo=gnubash)
+![Docker](https://img.shields.io/badge/docker-ghcr-blue?logo=docker)
+![Deploy](https://img.shields.io/badge/deploy-ssh-blue)
+
+Automated CI/CD pipeline: builds multiple Docker images and deploys them to a configured SSH server
+
+![](assets/yt-dlp-tg-bot_pipeline.png)
+
 # pipeline-cleaner
 
 ![](assets/pipeline-cleaner.jpg)
@@ -91,28 +116,6 @@ VYRA is a minimalist desktop diary overlay for fast screenshots, notes, and opti
 Fully automated development pipeline: build → package → publish to itch.io
 
 ![](assets/VYRA_screenshot.jpg)
-
-
-
-## YouTube Downloader Telegram Bot
-
-<img src="assets/yt-dlp-tg-bot_preview.jpg" width="300">
-
-A Telegram bot that downloads YouTube videos using `yt-dlp`, exposes them via a temporary HTTP link, and sends the result back to Telegram
-
-![CI/CD](https://github.com/TupiNUMBooR/yt-dlp-tg-bot/actions/workflows/ci-cd.yml/badge.svg)
-![Latest Release](https://img.shields.io/github/release/TupiNUMBooR/yt-dlp-tg-bot)
-![Release Date](https://img.shields.io/github/release-date/TupiNUMBooR/yt-dlp-tg-bot)
-
-![Top Lang](https://img.shields.io/github/languages/top/TupiNUMBooR/yt-dlp-tg-bot?logo=gnubash)
-![Docker](https://img.shields.io/badge/docker-ghcr-blue?logo=docker)
-![Deploy](https://img.shields.io/badge/deploy-ssh-blue)
-
-[@ytdlp_202604_bot](https://t.me/ytdlp_202604_bot) \| [GitHub](https://github.com/TupiNUMBooR/yt-dlp-tg-bot)
-
-Automated CI/CD pipeline: builds multiple Docker images and deploys them to a configured SSH server
-
-![](assets/yt-dlp-tg-bot_pipeline.png)
 
 
 

@@ -31,6 +31,33 @@
 
 
 
+## Telegram-бот для скачивания YouTube
+
+![](assets/yt-dlp-tg-bot_telegram_usecase.jpg)
+
+Telegram-бот, который скачивает YouTube-видео через `yt-dlp`, отдаёт их через временную HTTP-ссылку и отправляет результат обратно в Telegram
+
+<image src="assets/yt-dlp-tg-bot_telegram_qr.jpg" width="300">
+<image src="assets/yt-dlp-tg-bot_avatar.jpg" width="300">
+
+[@ytdlp_202604_bot](https://t.me/ytdlp_202604_bot) \| [GitHub](https://github.com/TupiNUMBooR/yt-dlp-tg-bot)
+
+---
+
+![CI/CD](https://github.com/TupiNUMBooR/yt-dlp-tg-bot/actions/workflows/ci-cd.yml/badge.svg)
+![Latest Release](https://img.shields.io/github/release/TupiNUMBooR/yt-dlp-tg-bot)
+![Release Date](https://img.shields.io/github/release-date/TupiNUMBooR/yt-dlp-tg-bot)
+
+![Top Lang](https://img.shields.io/github/languages/top/TupiNUMBooR/yt-dlp-tg-bot?logo=gnubash)
+![Docker](https://img.shields.io/badge/docker-ghcr-blue?logo=docker)
+![Deploy](https://img.shields.io/badge/deploy-ssh-blue)
+
+Автоматизированный CI/CD пайплайн: собирает несколько Docker-образов и деплоит их на настроенный SSH-сервер
+
+![](assets/yt-dlp-tg-bot_pipeline.png)
+
+
+
 # pipeline-cleaner
 
 ![](assets/pipeline-cleaner.jpg)
@@ -91,28 +118,6 @@ VYRA — это минималистичный оверлей-дневник д�
 Полностью автоматизированный пайплайн разработки: build → package → publish в itch.io
 
 ![](assets/VYRA_screenshot.jpg)
-
-
-
-## Telegram-бот для скачивания YouTube
-
-<img src="assets/yt-dlp-tg-bot_preview.jpg" width="300">
-
-Telegram-бот, который скачивает YouTube-видео через `yt-dlp`, отдаёт их через временную HTTP-ссылку и отправляет результат обратно в Telegram
-
-![CI/CD](https://github.com/TupiNUMBooR/yt-dlp-tg-bot/actions/workflows/ci-cd.yml/badge.svg)
-![Latest Release](https://img.shields.io/github/release/TupiNUMBooR/yt-dlp-tg-bot)
-![Release Date](https://img.shields.io/github/release-date/TupiNUMBooR/yt-dlp-tg-bot)
-
-![Top Lang](https://img.shields.io/github/languages/top/TupiNUMBooR/yt-dlp-tg-bot?logo=gnubash)
-![Docker](https://img.shields.io/badge/docker-ghcr-blue?logo=docker)
-![Deploy](https://img.shields.io/badge/deploy-ssh-blue)
-
-[@ytdlp_202604_bot](https://t.me/ytdlp_202604_bot) \| [GitHub](https://github.com/TupiNUMBooR/yt-dlp-tg-bot)
-
-Автоматизированный CI/CD пайплайн: собирает несколько Docker-образов и деплоит их на настроенный SSH-сервер
-
-![](assets/yt-dlp-tg-bot_pipeline.png)
 
 
 
