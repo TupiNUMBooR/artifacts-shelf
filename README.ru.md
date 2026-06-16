@@ -37,8 +37,8 @@
 
 Telegram-бот, который скачивает YouTube-видео через `yt-dlp`, отдаёт их через временную HTTP-ссылку и отправляет результат обратно в Telegram
 
-<image src="assets/yt-dlp-tg-bot_telegram_qr.jpg" width="300">
-<image src="assets/yt-dlp-tg-bot_avatar.jpg" width="300">
+<img src="assets/yt-dlp-tg-bot_telegram_qr.jpg" width="300">
+<img src="assets/yt-dlp-tg-bot_avatar.jpg" width="300">
 
 [@ytdlp_202604_bot](https://t.me/ytdlp_202604_bot) \| [GitHub](https://github.com/TupiNUMBooR/yt-dlp-tg-bot)
 
