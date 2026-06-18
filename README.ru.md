@@ -75,7 +75,7 @@ Telegram-бот, который скачивает YouTube-видео через
 
 # youtube-uploader
 
-![](assets/youtube-uploader-2.jpg)
+![](assets/youtube-uploader-3.jpg)
 
 Маленький Docker сервис, который загружает подготовленные папки из `./.workspace` на YouTube.
 

@@ -73,7 +73,7 @@ Tiny Docker service that periodically deletes old directories from mounted folde
 
 # youtube-uploader
 
-![](assets/youtube-uploader-2.jpg)
+![](assets/youtube-uploader-3.jpg)
 
 Tiny Docker service that uploads prepared folders from `./.workspace` to YouTube.
 
